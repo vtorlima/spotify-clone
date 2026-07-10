@@ -1,0 +1,71 @@
+[
+  {
+    "id": "0f3f64a0-ca03-496b-a4b5-1110ba12d6fd",
+    "title": "Música 1 [Álbum 2 - Artista 1]",
+    "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "albumId": "1dc1483e-d3db-4d77-8446-d1225a45007b",
+    "playlistsId": [
+      "28060a58-9687-4ad2-bdb3-636bc8c3d84a"
+    ],
+    "duration": 175,
+    "releaseDate": "2026-06-16T20:09:17.365008Z",
+    "timesListen": 5000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.365008Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "11b6d77e-07f8-4fc3-8328-682648d4f6b7",
+    "title": "Música 1 [Álbum 1 - Artista 1]",
+    "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "albumId": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
+    "playlistsId": [
+      "48e6ea85-cc21-468e-b443-bce58c4736eb"
+    ],
+    "duration": 175,
+    "releaseDate": "2026-06-16T20:09:17.361505Z",
+    "timesListen": 5000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "637d0549-e4e5-4941-94cb-c16037f620c1",
+    "title": "Música 1 [Álbum 4 - Artista 1]",
+    "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "albumId": "bde61ca6-eab0-48b2-a808-1a55767918ea",
+    "playlistsId": [],
+    "duration": 175,
+    "releaseDate": "2026-06-16T20:09:17.366683Z",
+    "timesListen": 5000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.367683Z",
+    "updatedAt": null
+  },
+  {
+    "id": "0cd8b2c1-e8c6-4ff1-82b5-1a944c14eb7e",
+    "title": "Música 1 [Álbum 3 - Artista 1]",
+    "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "albumId": "fe9d3e76-d930-4bae-b932-bd8cae3c2796",
+    "playlistsId": [],
+    "duration": 175,
+    "releaseDate": "2026-06-16T20:09:17.365679Z",
+    "timesListen": 5000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.365679Z",
+    "updatedAt": null
+  },
+  {
+    "id": "daf21239-7f38-486d-a3b6-3937e52f32e9",
+    "title": "Música 2 [Álbum 4 - Artista 1]",
+    "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "albumId": "bde61ca6-eab0-48b2-a808-1a55767918ea",
+    "playlistsId": [],
+    "duration": 190,
+    "releaseDate": "2026-06-06T20:09:17.367683Z",
+    "timesListen": 10000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.367683Z",
+    "updatedAt": null
+  }
+]

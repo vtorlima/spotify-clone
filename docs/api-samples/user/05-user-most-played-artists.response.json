@@ -1,0 +1,42 @@
+[
+  {
+    "id": "fa0f484a-529d-4868-9536-7e5818e5f47b",
+    "name": "Artista5",
+    "listeners": 1000000,
+    "about": "Biografia do Artista 5. Totalmente gerada via automação de teste.",
+    "createdAt": "2026-06-26T20:09:17.379857Z",
+    "updatedAt": "2026-06-26T20:09:17.392017Z"
+  },
+  {
+    "id": "bdbdc97c-628f-406c-a613-e5c9e8e760a8",
+    "name": "Artista4",
+    "listeners": 800000,
+    "about": "Biografia do Artista 4. Totalmente gerada via automação de teste.",
+    "createdAt": "2026-06-26T20:09:17.375682Z",
+    "updatedAt": "2026-06-26T20:09:17.392017Z"
+  },
+  {
+    "id": "a2b2274a-8734-4fca-915f-9a30b910cc0e",
+    "name": "Artista3",
+    "listeners": 600000,
+    "about": "Biografia do Artista 3. Totalmente gerada via automação de teste.",
+    "createdAt": "2026-06-26T20:09:17.372683Z",
+    "updatedAt": "2026-06-26T20:09:17.391015Z"
+  },
+  {
+    "id": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
+    "name": "Artista2",
+    "listeners": 400000,
+    "about": "Biografia do Artista 2. Totalmente gerada via automação de teste.",
+    "createdAt": "2026-06-26T20:09:17.368683Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "name": "Artista1",
+    "listeners": 200000,
+    "about": "Biografia do Artista 1. Totalmente gerada via automação de teste.",
+    "createdAt": "2026-06-26T20:09:17.353950Z",
+    "updatedAt": "2026-06-26T20:09:17.389016Z"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "playlists": {
+    "musicas-curtidas": "48e6ea85-cc21-468e-b443-bce58c4736eb",
+    "playlist-de-academia": "afbe6392-94b3-4509-b414-84c210f93fea",
+    "estudo-concentrado": "8220bded-d573-4a7b-80e0-776a98e821ac",
+    "modo-viagem": "28060a58-9687-4ad2-bdb3-636bc8c3d84a",
+    "lifecycle-test-deleted": "a7cf99d0-e062-4c7b-8ba3-97006200bc9b"
+  },
+  "artists": {
+    "artista1": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "artista2": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
+    "artista3": "a2b2274a-8734-4fca-915f-9a30b910cc0e",
+    "artista4": "bdbdc97c-628f-406c-a613-e5c9e8e760a8",
+    "artista5": "fa0f484a-529d-4868-9536-7e5818e5f47b"
+  },
+  "albums": {
+    "album1-artista1": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
+    "album2-artista1": "1dc1483e-d3db-4d77-8446-d1225a45007b",
+    "album3-artista1": "fe9d3e76-d930-4bae-b932-bd8cae3c2796",
+    "album4-artista1": "bde61ca6-eab0-48b2-a808-1a55767918ea",
+    "album1-artista2": "9921bc07-193d-4a35-90af-34b3c92f2223"
+  },
+  "musics": {
+    "musica1-album1-artista1": "11b6d77e-07f8-4fc3-8328-682648d4f6b7",
+    "musica2-album1-artista1": "d00fe526-a420-4215-bb8a-ee17ce882d8a",
+    "musica3-album1-artista1": "b06d222e-80b1-49b6-af88-706ef72f85f8",
+    "musica4-album1-artista1": "8fd46f50-7bd0-4d60-a8ff-139a2db052d9",
+    "musica5-album1-artista1": "efd09c94-c618-42b1-85a6-1869b30459c0",
+    "musica6-album1-artista1": "fa0edb54-bfaa-43ef-849c-34d0b67a94b4",
+    "musica8-album1-artista1": "b21fff0f-dcd4-4071-b761-f550fa983f63",
+    "musica8-album2-artista1": "f5ec803f-44d0-4f8a-845f-e0371c8308aa",
+    "musica8-album3-artista1": "5ad816ac-04af-437b-bd8e-9084dae8a31b",
+    "musica8-album4-artista1": "0577aa47-cba2-4386-9d4a-b6ab31ee4e76",
+    "musica8-album1-artista2": "33f66d24-c349-47aa-ac35-719e0eea7760"
+  }
+}

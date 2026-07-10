@@ -1,0 +1,41 @@
+{
+  "id": "afbe6392-94b3-4509-b414-84c210f93fea",
+  "name": "Playlist de Academia",
+  "description": "Sua seleção especial para: Playlist de Academia",
+  "musicQtd": 2,
+  "duration": 425,
+  "musics": [
+    {
+      "id": "c832d329-cf02-47af-a4b7-e8a4cffe11f2",
+      "title": "Música 6 [Álbum 1 - Artista 2]",
+      "artistId": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
+      "albumId": "9921bc07-193d-4a35-90af-34b3c92f2223",
+      "playlistsId": [
+        "afbe6392-94b3-4509-b414-84c210f93fea"
+      ],
+      "duration": 250,
+      "releaseDate": "2026-04-27T20:09:17.369685Z",
+      "timesListen": 30000,
+      "explicit": true,
+      "createdAt": "2026-06-26T20:09:17.369685Z",
+      "updatedAt": "2026-06-26T20:09:17.391015Z"
+    },
+    {
+      "id": "be51fa51-24b5-4d49-8cd7-9d8a26e0d2a2",
+      "title": "Música 1 [Álbum 4 - Artista 2]",
+      "artistId": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
+      "albumId": "d6ba5b2f-123d-4cfd-a95c-8ef1ea7241b4",
+      "playlistsId": [
+        "afbe6392-94b3-4509-b414-84c210f93fea"
+      ],
+      "duration": 175,
+      "releaseDate": "2026-06-16T20:09:17.371684Z",
+      "timesListen": 5000,
+      "explicit": false,
+      "createdAt": "2026-06-26T20:09:17.371684Z",
+      "updatedAt": "2026-06-26T20:09:17.391015Z"
+    }
+  ],
+  "createdAt": "2026-06-26T20:09:17.384861Z",
+  "updatedAt": null
+}

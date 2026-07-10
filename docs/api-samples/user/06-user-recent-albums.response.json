@@ -1,0 +1,47 @@
+[
+  {
+    "id": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
+    "title": "Álbum 1 do Artista 1",
+    "year": "2021",
+    "artistId": null,
+    "artistName": null,
+    "createdAt": "2026-06-26T20:09:17.360504Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "1dc1483e-d3db-4d77-8446-d1225a45007b",
+    "title": "Álbum 2 do Artista 1",
+    "year": "2022",
+    "artistId": null,
+    "artistName": null,
+    "createdAt": "2026-06-26T20:09:17.365008Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "fe9d3e76-d930-4bae-b932-bd8cae3c2796",
+    "title": "Álbum 3 do Artista 1",
+    "year": "2023",
+    "artistId": null,
+    "artistName": null,
+    "createdAt": "2026-06-26T20:09:17.365679Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "bde61ca6-eab0-48b2-a808-1a55767918ea",
+    "title": "Álbum 4 do Artista 1",
+    "year": "2024",
+    "artistId": null,
+    "artistName": null,
+    "createdAt": "2026-06-26T20:09:17.366683Z",
+    "updatedAt": "2026-06-26T20:09:17.390016Z"
+  },
+  {
+    "id": "9921bc07-193d-4a35-90af-34b3c92f2223",
+    "title": "Álbum 1 do Artista 2",
+    "year": "2021",
+    "artistId": null,
+    "artistName": null,
+    "createdAt": "2026-06-26T20:09:17.368683Z",
+    "updatedAt": "2026-06-26T20:09:17.391015Z"
+  }
+]

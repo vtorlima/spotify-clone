@@ -1,0 +1,67 @@
+[
+  {
+    "id": "d00fe526-a420-4215-bb8a-ee17ce882d8a",
+    "title": "Música 2 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 190,
+    "releaseDate": "2026-06-06T20:09:17.361505Z",
+    "timesListen": 10000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": null
+  },
+  {
+    "id": "b06d222e-80b1-49b6-af88-706ef72f85f8",
+    "title": "Música 3 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 205,
+    "releaseDate": "2026-05-27T20:09:17.361505Z",
+    "timesListen": 15000,
+    "explicit": true,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": null
+  },
+  {
+    "id": "8fd46f50-7bd0-4d60-a8ff-139a2db052d9",
+    "title": "Música 4 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 220,
+    "releaseDate": "2026-05-17T20:09:17.361505Z",
+    "timesListen": 20000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": null
+  },
+  {
+    "id": "efd09c94-c618-42b1-85a6-1869b30459c0",
+    "title": "Música 5 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 235,
+    "releaseDate": "2026-05-07T20:09:17.361505Z",
+    "timesListen": 25000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": null
+  },
+  {
+    "id": "fa0edb54-bfaa-43ef-849c-34d0b67a94b4",
+    "title": "Música 6 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 250,
+    "releaseDate": "2026-04-27T20:09:17.361505Z",
+    "timesListen": 30000,
+    "explicit": true,
+    "createdAt": "2026-06-26T20:09:17.361505Z",
+    "updatedAt": null
+  }
+]

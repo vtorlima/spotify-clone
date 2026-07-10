@@ -1,0 +1,10 @@
+{
+  "id": "a7cf99d0-e062-4c7b-8ba3-97006200bc9b",
+  "name": "Playlist de Teste Atualizada",
+  "description": "Descrição atualizada durante o teste da API",
+  "musicQtd": 0,
+  "duration": 0,
+  "musics": [],
+  "createdAt": "2026-07-10T21:43:35.349685Z",
+  "updatedAt": "2026-07-10T22:04:26.923789Z"
+}

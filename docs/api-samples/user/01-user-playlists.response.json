@@ -1,0 +1,38 @@
+[
+  {
+    "id": "48e6ea85-cc21-468e-b443-bce58c4736eb",
+    "name": "Músicas Curtidas",
+    "description": "Sua seleção especial para: Músicas Curtidas",
+    "musicQtd": 1,
+    "duration": 175,
+    "createdAt": "2026-06-26T20:09:17.381858Z",
+    "updatedAt": null
+  },
+  {
+    "id": "afbe6392-94b3-4509-b414-84c210f93fea",
+    "name": "Playlist de Academia",
+    "description": "Sua seleção especial para: Playlist de Academia",
+    "musicQtd": 2,
+    "duration": 425,
+    "createdAt": "2026-06-26T20:09:17.384861Z",
+    "updatedAt": null
+  },
+  {
+    "id": "8220bded-d573-4a7b-80e0-776a98e821ac",
+    "name": "Estudo Concentrado",
+    "description": "Sua seleção especial para: Estudo Concentrado",
+    "musicQtd": 3,
+    "duration": 630,
+    "createdAt": "2026-06-26T20:09:17.384861Z",
+    "updatedAt": null
+  },
+  {
+    "id": "28060a58-9687-4ad2-bdb3-636bc8c3d84a",
+    "name": "Modo Viagem",
+    "description": "Sua seleção especial para: Modo Viagem",
+    "musicQtd": 4,
+    "duration": 910,
+    "createdAt": "2026-06-26T20:09:17.384861Z",
+    "updatedAt": null
+  }
+]

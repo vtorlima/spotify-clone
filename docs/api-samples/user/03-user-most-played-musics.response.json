@@ -1,0 +1,67 @@
+[
+  {
+    "id": "0577aa47-cba2-4386-9d4a-b6ab31ee4e76",
+    "title": "Música 8 [Álbum 4 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 280,
+    "releaseDate": "2026-04-07T20:09:17.367683Z",
+    "timesListen": 40000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.367683Z",
+    "updatedAt": null
+  },
+  {
+    "id": "b21fff0f-dcd4-4071-b761-f550fa983f63",
+    "title": "Música 8 [Álbum 1 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 280,
+    "releaseDate": "2026-04-07T20:09:17.362504Z",
+    "timesListen": 40000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.362504Z",
+    "updatedAt": null
+  },
+  {
+    "id": "f5ec803f-44d0-4f8a-845f-e0371c8308aa",
+    "title": "Música 8 [Álbum 2 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 280,
+    "releaseDate": "2026-04-07T20:09:17.365679Z",
+    "timesListen": 40000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.365679Z",
+    "updatedAt": null
+  },
+  {
+    "id": "5ad816ac-04af-437b-bd8e-9084dae8a31b",
+    "title": "Música 8 [Álbum 3 - Artista 1]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 280,
+    "releaseDate": "2026-04-07T20:09:17.366683Z",
+    "timesListen": 40000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.366683Z",
+    "updatedAt": null
+  },
+  {
+    "id": "33f66d24-c349-47aa-ac35-719e0eea7760",
+    "title": "Música 8 [Álbum 1 - Artista 2]",
+    "artistId": null,
+    "albumId": null,
+    "playlistsId": null,
+    "duration": 280,
+    "releaseDate": "2026-04-07T20:09:17.369685Z",
+    "timesListen": 40000,
+    "explicit": false,
+    "createdAt": "2026-06-26T20:09:17.369685Z",
+    "updatedAt": null
+  }
+]
