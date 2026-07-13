@@ -1,4 +1,4 @@
-#Dia 1
+# Dia 1
 
 Hoje comecei a trabalhar efetivamente no projeto. O foco deste primeiro dia foi preparar o ambiente, executar o backend fornecido, explorar o comportamento real da API e documentar as informações que serão necessárias durante o desenvolvimento do frontend.
 
@@ -101,3 +101,52 @@ Também revisei a função de cada tecnologia que será utilizada no frontend:
 * Tailwind CSS será utilizado para a estilização.
 
 Por fim, estudei o conceito de CORS. Esse mecanismo será relevante quando o frontend, executado em uma origem diferente, começar a enviar requisições para o backend.
+
+
+# Dia 2
+
+No primeiro dia, o foco tinha sido preparar o backend, explorar a API e registrar como os dados e as rotas realmente funcionam. Desta vez, comecei a colocar o projeto React de pé e a preparar a base visual que será usada nas telas.
+
+## Criação do projeto frontend
+
+Primeiramente, criei o projeto dentro da pasta `frontend/`, mantendo a estrutura do repositório com o backend em `backend/` e o frontend ao lado.
+
+Utilizei o Vite com o template de React e TypeScript. Durante a criação, o Vite também perguntou qual ferramenta de linting eu gostaria de utilizar, oferecendo ESLint e Oxlint. Pesquisei brevemente e escolhi o ESLint.
+
+## Configuração do Tailwind CSS
+
+Depois de criar o projeto, instalei e configurei o Tailwind CSS.
+
+A configuração foi feita instalando o pacote `@tailwindcss/vite`, adicionando o plugin ao arquivo `vite.config.ts` e incluindo:
+
+`@import "tailwindcss";` no arquivo principal de CSS.
+
+Depois disso, removi todos os estilos de demonstração que o Vite adiciona automaticamente, incluindo os estilos do logo e da página inicial.
+
+## Preparação dos tokens visuais
+
+A principal parte do dia foi transformar os estilos definidos no Figma em tokens reutilizáveis dentro do Tailwind. Consultei os estilos fornecidos pelos mentores e registrei os valores dentro do bloco `@theme`.
+
+Comecei pela tipografia, definindo a família `Inter` e os tamanhos encontrados nos Text Styles do Figma, que variam entre `8px` e `64px`. Ainda falta importar a fonte de fato. 
+
+Também registrei as cores principais do projeto. Reutilizei os mesmos nomes presentes no Figma, que estão relacionados com as funcionalidades, em vez de aparência da cor.
+
+Essa escolha deixa mais claro onde cada token deve ser utilizado e facilita futuras alterações no design. Caso uma cor mude, será possível alterar o valor do token sem precisar procurar classes específicas espalhadas por vários componentes.
+
+Como os valores adicionados ao `@theme` geram classes reutilizáveis no Tailwind, o projeto agora possui um vocabulário visual inicial baseado no Figma. Isso permitirá construir as telas utilizando padrões consistentes de cor, espaçamento e tipografia.
+
+Para validar a configuração, criei um componente simples utilizando a fonte, as cores e o gradiente definidos. Os testes funcionaram corretamente e confirmaram que o Tailwind está interpretando os tokens e as utilities personalizadas.
+
+## Configuração da fonte
+
+Enquanto a fonte não estiver importada, o navegador utilizará uma fonte de fallback do sistema. Deixei essa pendência registrada para resolver durante a construção do layout, utilizando o Google Fonts ou um pacote local.
+
+Também descobri que o Spotify utiliza originalmente uma fonte própria chamada Circular, que não é distribuída gratuitamente. Por isso, a escolha da Inter no Figma provavelmente funciona como uma alternativa livre e visualmente semelhante para o projeto.
+
+## Planejamento do backend
+
+Além da configuração do frontend, organizei em paralelo uma análise das funcionalidades que precisarão ser implementadas no backend para atender às telas e aos requisitos.
+
+Um dos pontos confirmados foi o funcionamento das rotas de álbum. O Swagger apresenta apenas a rota `GET /album/{albumId}/musics`, responsável por retornar as músicas de um álbum. Não existe atualmente uma rota `GET /album/{albumId}` para consultar diretamente os dados gerais do álbum.
+
+Esse comportamento já ficou registrado para ser considerado quando a tela de álbum for implementada e quando as tarefas de backend forem organizadas.
