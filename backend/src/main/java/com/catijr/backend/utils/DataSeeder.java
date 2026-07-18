@@ -47,6 +47,8 @@ public class DataSeeder implements CommandLineRunner {
                     .name("Artista" + i)
                     .listeners(200_000 * i)
                     .about("Biografia do Artista " + i + ". Totalmente gerada via automação de teste.")
+                    .photoUrl("https://picsum.photos/seed/artist-" + i + "/300/300")
+                    .headerUrl("https://picsum.photos/seed/artist-header-" + i + "/1200/400")
                     .build();
             artist = artistRepository.save(artist);
 
@@ -58,6 +60,7 @@ public class DataSeeder implements CommandLineRunner {
                 Album album = Album.builder()
                         .title("Álbum " + j + " do Artista " + i)
                         .year("202" + j)
+                        .coverUrl("https://picsum.photos/seed/album-" + i + "-" + j + "/300/300")
                         .owner(artist)
                         .build();
                 album = albumRepository.save(album);

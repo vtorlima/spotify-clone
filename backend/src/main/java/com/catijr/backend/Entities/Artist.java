@@ -27,7 +27,11 @@ public class Artist {
     @Column(name = "num_listeners")
     private int listeners;
 
-    //Foto
+    @Column(name = "photo_url")
+    private String photoUrl;
+
+    @Column(name = "header_url")
+    private String headerUrl;
 
     @Column(name = "about")
     private String about;

@@ -27,6 +27,9 @@ public class Album {
     @Column(name = "release_year")
     private String year;
 
+    @Column(name = "cover_url")
+    private String coverUrl;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
