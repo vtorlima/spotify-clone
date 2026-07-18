@@ -1,29 +1,24 @@
-import { useEffect, useState } from 'react'
+// src/App.tsx
+import { Routes, Route } from 'react-router-dom'
+import AppLayout from './components/layout/AppLayout'
+import HomePage from './pages/HomePage'
+import PlaylistsPage from './pages/PlaylistsPage'
+import PlaylistDetailsPage from './pages/PlaylistDetailsPage'
+import ArtistPage from './pages/ArtistPage'
+import AlbumPage from './pages/AlbumPage'
+import NotFoundPage from './pages/NotFoundPage'
 
-const API_URL = import.meta.env.VITE_API_URL
-
-function App() {
-  const [dados, setDados] = useState<unknown>(null)
-  const [erro, setErro] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetch(`${API_URL}/user/playlists`)
-      .then((res) => res.json())
-      .then((json) => setDados(json))
-      .catch((e) => setErro(String(e)))
-  }, [])
-
+export default function App() {
   return (
-    <main className="min-h-screen bg-background-base p-8 font-app text-text-base">
-      <h1 className="text-20px font-bold text-accent">Teste de conexão</h1>
-
-      {erro && <p className="mt-2 text-12px text-text-subdued">Erro: {erro}</p>}
-
-      <pre className="mt-4 overflow-auto rounded-lg bg-background-highlight p-4 text-12px text-text-subdued">
-        {JSON.stringify(dados, null, 2)}
-      </pre>
-    </main>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="playlists" element={<PlaylistsPage />} />
+        <Route path="playlist/:playlistId" element={<PlaylistDetailsPage />} />
+        <Route path="artist/:artistId" element={<ArtistPage />} />
+        <Route path="album/:albumId" element={<AlbumPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
-
-export default App
