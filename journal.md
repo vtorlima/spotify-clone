@@ -150,3 +150,132 @@ Além da configuração do frontend, organizei em paralelo uma análise das func
 Um dos pontos confirmados foi o funcionamento das rotas de álbum. O Swagger apresenta apenas a rota `GET /album/{albumId}/musics`, responsável por retornar as músicas de um álbum. Não existe atualmente uma rota `GET /album/{albumId}` para consultar diretamente os dados gerais do álbum.
 
 Esse comportamento já ficou registrado para ser considerado quando a tela de álbum for implementada e quando as tarefas de backend forem organizadas.
+
+# Dia 3
+
+Hoje o objetivo era confirmar que o frontend consegue se comunicar com o backend, e ao final do dia consegui buscar e exibir na tela dados da API.
+
+Comecei criando o arquivo `.env` dentro da pasta `frontend/`, com a variável:
+
+`VITE_API_URL=http://localhost:8080`
+
+Também criei um `.env.example` com o mesmo conteúdo. Dessa forma, a URL do backend não fica escrita diretamente no código e poderá ser alterada futuramente sem precisar modificar os componentes.
+
+O `.env` armazena os valores usados na minha máquina e fica fora do Git. Já o `.env.example` é versionado e serve como referência para indicar quais variáveis precisam ser configuradas por quem clonar o projeto.
+
+Depois disso, substituí o conteúdo de teste que ainda estava no `App.tsx` por uma chamada à rota `/user/playlists`.
+
+Utilizei um `fetch` dentro do `useEffect`, armazenei o resultado no estado do componente e exibi a resposta na tela como JSON. Também reaproveitei alguns dos tokens visuais configurados no dia anterior, como as cores de fundo, destaque e texto secundário.
+
+Nesse processo, removi o arquivo `App.css`, que ainda continha estilos da demonstração inicial do Vite e não seria mais utilizado.
+
+Mantive todo o teste dentro do próprio `App.tsx`, utilizando `fetch` diretamente. A estrutura definitiva de integração com a API, incluindo serviços, tipagem em TypeScript e tratamento de erros, será criada mais adiante, conforme as primeiras telas começarem a utilizar dados reais.
+
+## Configuração do CORS
+
+Com o frontend e o backend em execução, a primeira chamada à API retornou um erro de CORS:
+
+`Access to fetch at 'http://localhost:8080/user/playlists' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present.`
+
+O frontend estava executando na porta `5173` e o backend na porta `8080`. Como as portas são diferentes, o navegador considera que as aplicações estão em origens distintas e bloqueia o acesso à resposta quando o backend não autoriza explicitamente essa origem.
+
+Depois de confirmar o comportamento, criei a classe `config/CorsConfig.java` no backend. Nela, liberei a origem `http://localhost:5173` para as rotas da aplicação e para os métodos HTTP utilizados no projeto.
+
+Também incluí o método `OPTIONS`, utilizado pelo navegador nas requisições de verificação que podem acontecer antes de operações como `POST`, `PUT`, `PATCH` e `DELETE`.
+
+Depois da alteração, reiniciei a aplicação e a resposta da rota `/user/playlists` apareceu corretamente na tela. O console também deixou de apresentar o erro de CORS, confirmando a comunicação entre as duas aplicações.
+
+# Dia 4
+
+Hoje montei a estrutura principal da aplicação e configurei a navegação, ainda sem buscar dados da API.
+
+Ao final do dia, deixei prontas as rotas, as páginas temporárias e a moldura que será compartilhada entre as telas.
+
+## Planejamento das rotas
+
+Antes de começar a implementação, defini as rotas principais da aplicação:
+
+* Início: `/`;
+* Playlists: `/playlists`;
+* Detalhes da playlist: `/playlist/:playlistId`;
+* Artista: `/artist/:artistId`;
+* Álbum: `/album/:albumId`.
+
+Também adicionei uma rota para exibir uma página de conteúdo não encontrado.
+
+Nos parâmetros das URLs, utilizei os mesmos nomes presentes nas rotas do backend: `playlistId`, `artistId` e `albumId`. Dessa forma, os identificadores obtidos pela página poderão ser utilizados diretamente nas chamadas à API durante a implementação das funcionalidades.
+
+Na sidebar, deixei links fixos apenas para as páginas de início e playlists. As páginas de detalhes dependem de um identificador específico e serão acessadas futuramente por meio de cards, listas e outros elementos da interface.
+
+## Configuração da fonte
+
+Resolvi a pendência da fonte Inter, que já estava declarada nos tokens do Tailwind, mas ainda não tinha sido carregada pelo navegador.
+
+Importei a fonte pelo Google Fonts e mantive o token `--font-app` como a fonte principal da aplicação.
+
+Durante essa configuração, aprendi que os comandos `@import` precisam aparecer no início do arquivo CSS. Por isso, o import da fonte foi colocado antes do `@import "tailwindcss"`.
+
+## Criação das páginas
+
+Criei as páginas de início, playlists, detalhes da playlist, artista, álbum e conteúdo não encontrado.
+
+Por enquanto, cada página contém apenas um título para identificar a rota atual. Nas páginas de detalhes, também utilizei o `useParams` para ler os identificadores presentes na URL e exibi-los na tela.
+
+## Estrutura principal da aplicação
+
+Depois das páginas, comecei a montar o `AppLayout`, responsável pela estrutura que permanecerá visível durante a navegação.
+
+O layout possui:
+
+* sidebar (esquerda);
+* topbar;
+* área principal de conteúdo;
+* painel lateral direito;
+* player na parte inferior.
+
+Utilizei Flexbox para organizar a aplicação como uma coluna do tamanho da tela. A região central contém a sidebar, o conteúdo e o painel lateral, enquanto o player aparece como o último elemento da estrutura.
+
+O conteúdo principal possui sua própria rolagem. Dessa forma, o player permanece na parte inferior sem precisar utilizar `position: fixed` e sem cobrir os elementos da página.
+
+Utilizei o componente `<Outlet />` para definir onde o React Router deve renderizar o conteúdo da rota atual. Assim, a estrutura principal é criada apenas uma vez, enquanto somente a área central muda durante a navegação.
+
+Também ajustei a forma como as colunas são separadas visualmente. O fundo externo da aplicação é preto, enquanto a sidebar, o conteúdo principal e o painel lateral utilizam o fundo `#121212`.
+
+Os espaços entre esses elementos deixam o fundo preto visível e criam a separação mostrada no design. Para reproduzir esse efeito, utilizei `gap`, espaçamento interno e cantos arredondados nos três painéis.
+
+Durante esse ajuste, adicionei um novo token com a cor utilizada na barra de busca. 
+
+## Configuração do React Router
+
+No arquivo `main.tsx`, envolvi a aplicação com o `BrowserRouter`.
+
+Depois disso, substituí o teste de conexão que ainda estava no `App.tsx` pela definição das rotas. Esse teste havia sido criado apenas para validar a comunicação com o backend e não era mais necessário nesta fase.
+
+Organizei as páginas como rotas filhas de uma rota principal que renderiza o `AppLayout`. Dessa forma, todas as páginas são exibidas dentro da mesma moldura.
+
+A página de conteúdo não encontrado também ficou dentro dessa estrutura, para que a sidebar, a topbar, o painel e o player continuem aparecendo mesmo quando o endereço acessado não corresponde a uma página existente.
+
+## Testes da navegação
+
+Depois de finalizar a configuração, testei todas as rotas.
+
+Confirmei que a moldura permanece visível durante a navegação e que apenas o conteúdo do `<Outlet />` é substituído. Os links da sidebar trocam a página sem recarregar o navegador e o item correspondente à rota atual recebe o estilo ativo.
+
+Também testei os botões de voltar e avançar do navegador, as rotas com parâmetros e a página de conteúdo não encontrado.
+
+Ao acessar `/playlist/123`, por exemplo, o valor `123` foi lido pelo `useParams` e exibido corretamente na página.
+
+Toda essa etapa pôde ser testada sem iniciar o Docker ou o backend, já que as páginas ainda não fazem chamadas à API.
+
+## Organização dos commits
+
+Separei as alterações em quatro commits:
+
+* configuração da fonte e do novo token visual;
+* criação das páginas;
+* criação da estrutura principal;
+* configuração das rotas e da navegação.
+
+Também mantive a instalação do `react-router-dom` no mesmo commit em que a dependência começou a ser utilizada.
+
+Por descuido, realizei várias alterações antes de começar os commits. Por isso, precisei reconstruir essa divisão no final. Para as próximas etapas, pretendo criar os commits conforme cada parte for concluída, evitando acumular mudanças com responsabilidades diferentes.
