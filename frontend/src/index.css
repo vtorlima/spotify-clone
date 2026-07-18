@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   /*TYPOGRAPHY*/
 
   --font-app: "Inter", ui-sans-serif, system-ui, sans-serif;
-  /* falta importar o inter */
   
   --text-8px: 0.5rem;       /* 8px */
   --text-10px: 0.625rem;    /* 10px */
@@ -25,6 +25,7 @@
   --color-background-highlight: #1f1f1f;
   --color-background-elements: #2d2d2d;
   --color-home-bg-gradient-variant: #202020;
+  --color-searchbox-bg: #1a1a1a;
 
   /* Text */
   --color-text-base: #ffffff;
@@ -47,6 +48,7 @@
   /* Navbar gradient colors */
   --color-navbar-start: #5b5b5b;
   --color-navbar-end: #4c4444;
+
 }
 
 /*da esquerda (#5b5b5b) para a direita (#4c4444).*/
