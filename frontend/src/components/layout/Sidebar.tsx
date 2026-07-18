@@ -9,7 +9,7 @@ export default function Sidebar() {
     }`
 
   return (
-    <aside className="w-60 shrink-0 overflow-y-auto rounded-lg bg-background-base p-4">
+    <aside className="w-[310px] shrink-0 overflow-y-auto rounded-lg bg-background-base p-4">
       <h1 className="mb-6 text-20px font-bold">MeuSpotify</h1>
 
       <nav className="flex flex-col gap-1">

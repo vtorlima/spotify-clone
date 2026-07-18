@@ -1,6 +1,6 @@
 export default function Topbar() {
   return (
-    <header className="flex h-16 shrink-0 items-center px-4">
+    <header className="flex h-[60px] shrink-0 items-center px-4">
       <input
         type="text"
         placeholder="O que você quer ouvir?"
