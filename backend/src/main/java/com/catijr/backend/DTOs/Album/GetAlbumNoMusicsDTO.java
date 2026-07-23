@@ -6,8 +6,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 public record GetAlbumNoMusicsDTO(UUID id, String title,
-                          String year, UUID artistId,
-                          String artistName,
+                          String year, String coverUrl,
+                          UUID artistId, String artistName,
                           Instant createdAt, Instant updatedAt) {
 
     public GetAlbumNoMusicsDTO(Album album) {
@@ -15,11 +15,11 @@ public record GetAlbumNoMusicsDTO(UUID id, String title,
                 album.getId(),
                 album.getTitle(),
                 album.getYear(),
+                album.getCoverUrl(),
                 album.getOwner().getId(),
                 album.getOwner().getName(),
                 album.getCreatedAt(),
                 album.getUpdatedAt()
         );
     }
-    
 }

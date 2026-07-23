@@ -1,16 +1,13 @@
 package com.catijr.backend.Services;
 
 
+import com.catijr.backend.DTOs.Playlist.CreatePlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Entities.Playlist;
-import com.catijr.backend.Repositories.MusicRepository;
-import com.catijr.backend.DTOs.Playlist.CreatePlaylistDTO;
-import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
-import com.catijr.backend.Entities.Music;
-import com.catijr.backend.Entities.Playlist;
 import com.catijr.backend.Mappers.PlaylistMapper;
+import com.catijr.backend.Repositories.MusicRepository;
 import com.catijr.backend.Repositories.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -81,7 +78,7 @@ public class PlaylistService {
         Playlist playlistEntity = playlistMapper.toEntity(playlist);
         Playlist savedEntity = playlistRepository.save(playlistEntity);
 
-        return playlistMapper.toDTO(savedEntity);
+        return new GetPlaylistNoMusicDTO(savedEntity);
     }
 
 

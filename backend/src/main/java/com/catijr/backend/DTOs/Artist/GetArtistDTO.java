@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 public record GetArtistDTO(UUID id, String name, int listeners, String about,
+    String photoUrl, String headerUrl,
     Instant createdAt, Instant updatedAt
 ){
 
@@ -15,9 +16,10 @@ public record GetArtistDTO(UUID id, String name, int listeners, String about,
             artist.getName(),
             artist.getListeners(),
             artist.getAbout(),
+            artist.getPhotoUrl(),
+            artist.getHeaderUrl(),
             artist.getCreatedAt(),
             artist.getUpdatedAt()
-
         );
     }
 }
