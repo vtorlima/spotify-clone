@@ -15,13 +15,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/artist/")
+@RequestMapping("/artist")
 @RequiredArgsConstructor
 public class ArtistController {
 
     private final ArtistService artistService;
 
-    @GetMapping("{artistId}/popularMusics")
+    @GetMapping("/{artistId}/popularMusics")
     public ResponseEntity<List<GetMusicDTO>> getPopularMusicsByArtistId(@PathVariable String artistId) {
         var popMusics = artistService.getPopularMusicsByArtistId(UUID.fromString(artistId));
 
@@ -30,7 +30,7 @@ public class ArtistController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping("{artistId}/albums")
+    @GetMapping("/{artistId}/albums")
     public ResponseEntity<List<GetAlbumDTO>> getAlbumsByArtistId(@PathVariable String artistId) {
         var albums = artistService.getAlbumsByArtistId(UUID.fromString(artistId));
 

@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/album/")
+@RequestMapping("/album")
 @RequiredArgsConstructor
 public class AlbumController {
 
     private final AlbumService albumService;
 
-    @GetMapping("{albumId}/musics")
+    @GetMapping("/{albumId}/musics")
     public ResponseEntity<List<GetMusicDTO>> getMusicsByAlbumId(@PathVariable String albumId) {
         var musics = albumService.getMusicsByAlbumId(UUID.fromString(albumId));
 
