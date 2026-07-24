@@ -1,42 +1,52 @@
 [
   {
-    "id": "fa70612e-46b4-43f9-9853-14af75831b14",
+    "id": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
     "name": "Artista1",
     "listeners": 200000,
     "about": "Biografia do Artista 1. Totalmente gerada via automação de teste.",
-    "createdAt": "2026-06-26T20:09:17.353950Z",
-    "updatedAt": "2026-06-26T20:09:17.389016Z"
+    "photoUrl": "https://picsum.photos/seed/artist-1/300/300",
+    "headerUrl": "https://picsum.photos/seed/artist-header-1/1200/400",
+    "createdAt": "2026-07-23T20:48:55.916910Z",
+    "updatedAt": "2026-07-23T20:48:55.947944Z"
   },
   {
-    "id": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
+    "id": "b2cc2ef3-b220-4506-a550-5a7eb9b4c61c",
     "name": "Artista2",
     "listeners": 400000,
     "about": "Biografia do Artista 2. Totalmente gerada via automação de teste.",
-    "createdAt": "2026-06-26T20:09:17.368683Z",
-    "updatedAt": "2026-06-26T20:09:17.390016Z"
+    "photoUrl": "https://picsum.photos/seed/artist-2/300/300",
+    "headerUrl": "https://picsum.photos/seed/artist-header-2/1200/400",
+    "createdAt": "2026-07-23T20:48:55.930071Z",
+    "updatedAt": "2026-07-23T20:48:55.949948Z"
   },
   {
-    "id": "a2b2274a-8734-4fca-915f-9a30b910cc0e",
+    "id": "6ef7aad1-6f4f-4fe6-945e-c3166928d712",
     "name": "Artista3",
     "listeners": 600000,
     "about": "Biografia do Artista 3. Totalmente gerada via automação de teste.",
-    "createdAt": "2026-06-26T20:09:17.372683Z",
-    "updatedAt": "2026-06-26T20:09:17.391015Z"
+    "photoUrl": "https://picsum.photos/seed/artist-3/300/300",
+    "headerUrl": "https://picsum.photos/seed/artist-header-3/1200/400",
+    "createdAt": "2026-07-23T20:48:55.933116Z",
+    "updatedAt": "2026-07-23T20:48:55.949948Z"
   },
   {
-    "id": "bdbdc97c-628f-406c-a613-e5c9e8e760a8",
+    "id": "21c91aed-e74d-486c-aee7-258636c5fe0a",
     "name": "Artista4",
     "listeners": 800000,
     "about": "Biografia do Artista 4. Totalmente gerada via automação de teste.",
-    "createdAt": "2026-06-26T20:09:17.375682Z",
-    "updatedAt": "2026-06-26T20:09:17.392017Z"
+    "photoUrl": "https://picsum.photos/seed/artist-4/300/300",
+    "headerUrl": "https://picsum.photos/seed/artist-header-4/1200/400",
+    "createdAt": "2026-07-23T20:48:55.936624Z",
+    "updatedAt": "2026-07-23T20:48:55.950948Z"
   },
   {
-    "id": "fa0f484a-529d-4868-9536-7e5818e5f47b",
+    "id": "0d479605-6754-412a-89c7-d35b2605c9c6",
     "name": "Artista5",
     "listeners": 1000000,
     "about": "Biografia do Artista 5. Totalmente gerada via automação de teste.",
-    "createdAt": "2026-06-26T20:09:17.379857Z",
-    "updatedAt": "2026-06-26T20:09:17.392017Z"
+    "photoUrl": "https://picsum.photos/seed/artist-5/300/300",
+    "headerUrl": "https://picsum.photos/seed/artist-header-5/1200/400",
+    "createdAt": "2026-07-23T20:48:55.940133Z",
+    "updatedAt": "2026-07-23T20:48:55.950948Z"
   }
 ]

@@ -1,47 +1,52 @@
 [
   {
-    "id": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
+    "id": "247a4f49-ff4c-46b9-9252-94df93df7ad4",
     "title": "Álbum 1 do Artista 1",
     "year": "2021",
-    "artistId": null,
-    "artistName": null,
-    "createdAt": "2026-06-26T20:09:17.360504Z",
-    "updatedAt": "2026-06-26T20:09:17.390016Z"
+    "coverUrl": "https://picsum.photos/seed/album-1-1/300/300",
+    "artistId": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+    "artistName": "Artista1",
+    "createdAt": "2026-07-23T20:48:55.921534Z",
+    "updatedAt": "2026-07-23T20:48:55.948950Z"
   },
   {
-    "id": "1dc1483e-d3db-4d77-8446-d1225a45007b",
+    "id": "6d89047c-f5d8-4a8d-b077-959c78b92a09",
     "title": "Álbum 2 do Artista 1",
     "year": "2022",
-    "artistId": null,
-    "artistName": null,
-    "createdAt": "2026-06-26T20:09:17.365008Z",
-    "updatedAt": "2026-06-26T20:09:17.390016Z"
+    "coverUrl": "https://picsum.photos/seed/album-1-2/300/300",
+    "artistId": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+    "artistName": "Artista1",
+    "createdAt": "2026-07-23T20:48:55.926042Z",
+    "updatedAt": "2026-07-23T20:48:55.948950Z"
   },
   {
-    "id": "fe9d3e76-d930-4bae-b932-bd8cae3c2796",
+    "id": "4053a8ba-7737-4f55-8c56-fedffc1da828",
     "title": "Álbum 3 do Artista 1",
     "year": "2023",
-    "artistId": null,
-    "artistName": null,
-    "createdAt": "2026-06-26T20:09:17.365679Z",
-    "updatedAt": "2026-06-26T20:09:17.390016Z"
+    "coverUrl": "https://picsum.photos/seed/album-1-3/300/300",
+    "artistId": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+    "artistName": "Artista1",
+    "createdAt": "2026-07-23T20:48:55.927545Z",
+    "updatedAt": "2026-07-23T20:48:55.948950Z"
   },
   {
-    "id": "bde61ca6-eab0-48b2-a808-1a55767918ea",
+    "id": "addfae7a-70c9-4d72-9dd4-79ba56ecae25",
     "title": "Álbum 4 do Artista 1",
     "year": "2024",
-    "artistId": null,
-    "artistName": null,
-    "createdAt": "2026-06-26T20:09:17.366683Z",
-    "updatedAt": "2026-06-26T20:09:17.390016Z"
+    "coverUrl": "https://picsum.photos/seed/album-1-4/300/300",
+    "artistId": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+    "artistName": "Artista1",
+    "createdAt": "2026-07-23T20:48:55.928067Z",
+    "updatedAt": "2026-07-23T20:48:55.948950Z"
   },
   {
-    "id": "9921bc07-193d-4a35-90af-34b3c92f2223",
+    "id": "2ddf762c-e5ef-4488-b003-2e1178db71fa",
     "title": "Álbum 1 do Artista 2",
     "year": "2021",
-    "artistId": null,
-    "artistName": null,
-    "createdAt": "2026-06-26T20:09:17.368683Z",
-    "updatedAt": "2026-06-26T20:09:17.391015Z"
+    "coverUrl": "https://picsum.photos/seed/album-2-1/300/300",
+    "artistId": "b2cc2ef3-b220-4506-a550-5a7eb9b4c61c",
+    "artistName": "Artista2",
+    "createdAt": "2026-07-23T20:48:55.930071Z",
+    "updatedAt": "2026-07-23T20:48:55.949948Z"
   }
 ]

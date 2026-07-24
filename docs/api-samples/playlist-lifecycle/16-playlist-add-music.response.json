@@ -1,27 +1,30 @@
 {
-  "id": "a7cf99d0-e062-4c7b-8ba3-97006200bc9b",
-  "name": "Playlist de Teste Atualizada",
-  "description": "Descrição atualizada durante o teste da API",
+  "id": "67dce544-dc9d-487f-aa2f-627955c87379",
+  "name": "playlist de teste atualizada",
+  "description": "descrição atualizada durante teste da api",
   "musicQtd": 1,
   "duration": 175,
   "musics": [
     {
-      "id": "11b6d77e-07f8-4fc3-8328-682648d4f6b7",
+      "id": "bb4dcb9e-f150-406a-86c8-59d60d138ea8",
       "title": "Música 1 [Álbum 1 - Artista 1]",
-      "artistId": "fa70612e-46b4-43f9-9853-14af75831b14",
-      "albumId": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
+      "artistId": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+      "artistName": "Artista1",
+      "albumId": "247a4f49-ff4c-46b9-9252-94df93df7ad4",
+      "albumTitle": "Álbum 1 do Artista 1",
+      "albumCoverUrl": "https://picsum.photos/seed/album-1-1/300/300",
       "playlistsId": [
-        "48e6ea85-cc21-468e-b443-bce58c4736eb",
-        "a7cf99d0-e062-4c7b-8ba3-97006200bc9b"
+        "5869c4cf-5c62-491c-aa33-81a239f33978",
+        "67dce544-dc9d-487f-aa2f-627955c87379"
       ],
       "duration": 175,
-      "releaseDate": "2026-06-16T20:09:17.361505Z",
+      "releaseDate": "2026-07-13T20:48:55.923038Z",
       "timesListen": 5000,
       "explicit": false,
-      "createdAt": "2026-06-26T20:09:17.361505Z",
-      "updatedAt": "2026-06-26T20:09:17.390016Z"
+      "createdAt": "2026-07-23T20:48:55.923038Z",
+      "updatedAt": "2026-07-23T20:48:55.948950Z"
     }
   ],
-  "createdAt": "2026-07-10T21:43:35.349685Z",
-  "updatedAt": "2026-07-10T22:01:43.623443300Z"
+  "createdAt": "2026-07-24T17:24:05.091334Z",
+  "updatedAt": "2026-07-24T17:32:02.334393200Z"
 }
