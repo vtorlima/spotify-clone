@@ -279,3 +279,206 @@ Separei as alterações em quatro commits:
 Também mantive a instalação do `react-router-dom` no mesmo commit em que a dependência começou a ser utilizada.
 
 Por descuido, realizei várias alterações antes de começar os commits. Por isso, precisei reconstruir essa divisão no final. Para as próximas etapas, pretendo criar os commits conforme cada parte for concluída, evitando acumular mudanças com responsabilidades diferentes.
+
+# Dia 5
+
+Hoje trabalhei exclusivamente no backend, com o objetivo de preparar e estabilizar os dados que serão utilizados nas próximas etapas do frontend.
+
+Antes de criar as interfaces TypeScript e os componentes que consumirão a API, considerei importante definir o formato definitivo das respostas. Alterar um campo depois que ele já estiver sendo utilizado em diferentes páginas exigiria mudanças em vários arquivos do frontend. Neste momento, essas alterações ainda poderiam ser realizadas diretamente nos DTOs e nas entidades, com um impacto menor.
+
+Por isso, o foco do dia foi consolidar o contrato da API, enriquecer os dados retornados, corrigir problemas de mapeamento e normalizar alguns comportamentos das rotas.
+
+## Origem dos dados do projeto
+
+Antes de implementar os campos relacionados às imagens, investiguei de onde os dados atualmente utilizados pela aplicação são obtidos.
+
+Os artistas, álbuns e músicas são criados diretamente pelo `DataSeeder` e armazenados no PostgreSQL executado pelo Docker.
+
+O seeder cria cinco artistas, quatro álbuns para cada artista e oito músicas para cada álbum. Isso significa que os dados exibidos pelo frontend podem ser controlados diretamente pelo próprio projeto.
+
+## Adição dos campos de imagem
+
+Adicionei os campos `photoUrl` e `headerUrl` à entidade de artista.
+
+* `photoUrl` será utilizado em imagens quadradas, como cards e avatares;
+* `headerUrl` será utilizado no banner horizontal exibido no topo da página do artista.
+
+Também adicionei o campo `coverUrl` à entidade de álbum, que será utilizado para armazenar o endereço de sua capa.
+
+Inicialmente, esses campos foram preenchidos no seeder com URLs do `picsum.photos`. 
+
+Utilizei seeds determinísticas pois, dessa forma, a mesma URL sempre retorna a mesma imagem. Mesmo depois de recriar o banco, cada artista ou álbum continuará associado visualmente à mesma imagem.
+
+Durante essa implementação, compreendi melhor que o backend não armazena os arquivos das imagens. O banco guarda apenas o endereço em formato de texto. Posteriormente, quando o frontend renderizar um elemento `<img>`, o próprio navegador será responsável por acessar essa URL e carregar o arquivo.
+
+## Imagem das músicas
+
+Não adicionei um campo de imagem diretamente à entidade de música.
+
+Como cada música pertence a um álbum, a imagem exibida para a faixa deve ser a própria capa do álbum. Armazenar essa informação novamente na música duplicaria o mesmo dado em dois lugares e poderia gerar inconsistências caso apenas um dos valores fosse alterado.
+
+Em vez disso, adicionei o campo `albumCoverUrl` ao `GetMusicDTO`. Seu valor é obtido por meio de:
+
+`music.getAlbum().getCoverUrl()`
+
+Assim, a capa continua armazenada apenas no álbum, mas o frontend recebe essa informação diretamente na resposta da música, sem precisar realizar uma segunda requisição.
+
+## Correção do mapeamento das músicas
+
+Durante os testes anteriores, havia observado que o campo `artistId` retornava como `null` na rota `/user/recentMusics`.
+
+Ao investigar o código, confirmei que esse comportamento era causado pelo MapStruct.
+
+O MapStruct realiza automaticamente os mapeamentos quando os campos da origem e do destino possuem nomes e estruturas equivalentes. Entretanto, na entidade `Music`, não existe diretamente um método `getArtistId()`. O identificador está dentro do objeto relacionado e precisa ser acessado por:
+
+`music.getArtist().getId()`
+
+Como o mapper não possuía uma anotação `@Mapping` indicando esse caminho, o MapStruct não encontrava a origem do campo e atribuía `null` ao valor gerado.
+
+O mesmo acontecia com outros campos aninhados, como `albumId` e `playlistsId`.
+
+## Padronização dos DTOs de leitura
+
+Existiam duas formas diferentes de criar os DTOs de leitura no projeto:
+
+* por meio dos mappers gerados pelo MapStruct;
+* por meio dos construtores dos próprios records, como `new GetMusicDTO(music)`.
+
+Decidi utilizar apenas os construtores para os DTOs de leitura.
+
+Os construtores permitem acessar explicitamente os relacionamentos da entidade, além de executar transformações específicas, como converter a lista de playlists em uma lista de identificadores.
+
+A decisão adotada foi:
+
+* DTOs de leitura serão construídos por seus próprios construtores;
+* MapStruct continuará sendo utilizado apenas em operações de escrita, como a conversão do DTO de criação de playlist para uma entidade.
+
+Atualizei o `UserService` para utilizar os construtores ao retornar músicas e removi o `MusicMapper`.
+
+Durante essa mudança, identifiquei que o `AlbumMapper` apresentava o mesmo problema. A rota `/user/recentAlbums` retornava `artistId` e `artistName` como `null`, pois esses campos também dependiam de um relacionamento aninhado.
+
+Substituí o mapper pelo construtor do `GetAlbumDTO` e removi o `AlbumMapper`.
+
+O `ArtistMapper` funcionava corretamente porque o DTO de artista utiliza apenas campos diretos da entidade. Mesmo assim, também foi removido para manter o mesmo padrão em todos os DTOs de leitura.
+
+## Normalização das rotas
+
+Também revisei os mapeamentos dos controllers de playlist, artista e álbum.
+
+Anteriormente, algumas classes utilizavam uma barra no final do `@RequestMapping`, como:
+
+`@RequestMapping("/playlist/")`
+
+Normalizei a estrutura para manter a barra no início dos métodos:
+
+`@RequestMapping("/playlist")`
+
+`@GetMapping("/{playlistId}")`
+
+Com essa organização, fica mais claro como o caminho final é formado pela combinação da rota da classe com a rota do método.
+
+Durante os testes, confirmei que o Spring Boot 3 não considera automaticamente `/playlist` e `/playlist/` como a mesma rota. Por isso, a alteração afetou principalmente a criação de playlists, que anteriormente utilizava `POST /playlist/` e passou a utilizar `POST /playlist`.
+
+As rotas de artista e álbum mantiveram seus endereços finais, pois os caminhos concatenados continuaram equivalentes.
+
+## Ajustes na criação de playlists
+
+O método responsável pela criação de playlists possuía o nome `postMethodName`, provavelmente gerado automaticamente pela IDE.
+
+Renomeei o método para `createPlaylist`, tornando sua responsabilidade mais clara.
+
+Também alterei o status da resposta de `200 OK` para `201 Created`.
+
+O status `200` indica que a requisição foi processada corretamente, enquanto o status `201` é mais específico para situações em que um novo recurso foi criado. Como a operação adiciona uma nova playlist ao sistema, o segundo código representa melhor o resultado da requisição.
+
+## Limpeza do código
+
+Aproveitei a revisão para realizar alguns ajustes menores de organização e nomenclatura.
+
+Removi imports duplicados do `PlaylistController` e do `PlaylistService`.
+
+Também renomeei a variável `edited_playlist` para `editedPlaylist`, seguindo a convenção camelCase utilizada em Java.
+
+Em outro trecho, corrigi uma variável chamada `albums` que armazenava uma lista de playlists, apesar disso não alterar o funcionamento do código. 
+
+Por fim, removi dois DTOs que não eram importados ou utilizados em nenhuma parte da aplicação:
+
+* `GetPopSongsResponseDTO`;
+* `GetFollowerDTO`.
+
+Se mais pra frente eu precisar deles eu adiciono de novo, mas não acho que vou precisar. 
+
+## Problema com o bean do PlaylistMapper
+
+Depois das alterações, o projeto compilava corretamente, mas a aplicação não iniciava.
+
+O Spring retornava a seguinte mensagem:
+
+`No qualifying bean of type 'PlaylistMapper' available`
+
+Esse erro indicava que o Spring não havia encontrado uma implementação do `PlaylistMapper` para injetar no serviço.
+
+Ao verificar os arquivos gerados, encontrei tanto o `PlaylistMapperImpl.java` dentro de `generated-sources` quanto o `PlaylistMapperImpl.class` dentro de `target/classes`. A implementação também possuía a anotação `@Component`, que deveria permitir sua identificação pelo Spring.
+
+Apesar disso, o log do Maven mostrava:
+
+`Nothing to compile - all classes are up to date`
+
+Isso indicava que o Maven estava reutilizando os arquivos já presentes em `target/`, mesmo que o estado dessa pasta não estivesse consistente com o código atual.
+
+Executei então um `clean compile`, removendo os arquivos antigos e reconstruindo completamente o projeto. Depois disso, iniciei novamente a aplicação e o bean foi encontrado corretamente.
+
+Esse problema ocorreu porque as implementações dos mappers não existem diretamente no código-fonte. Elas são geradas durante a compilação por um annotation processor. Caso o estado do build esteja desatualizado, o código gerado pode não corresponder às interfaces atuais.
+
+Também considerei remover completamente o `PlaylistMapper`, pois sua conversão poderia ser escrita manualmente com poucas linhas. Entretanto, decidi mantê-lo por enquanto, já que o MapStruct continua sendo útil para a conversão de DTOs de escrita e é uma ferramenta comum em projetos Java.
+
+## Recriação do banco de dados
+
+Depois de adicionar os novos campos, foi necessário recriar os dados do banco.
+
+A configuração `ddl-auto=update` permite que o Hibernate adicione novas colunas às tabelas existentes, mas não preenche automaticamente os registros que já estavam armazenados.
+
+Além disso, o `DataSeeder` verifica se já existem artistas cadastrados antes de executar. Caso encontre algum registro, ele encerra o processo para evitar duplicação dos dados.
+
+Por isso, apenas reiniciar a aplicação não seria suficiente para preencher `photoUrl`, `headerUrl` e `coverUrl`.
+
+Executei:
+
+1. `docker compose down`;
+2. removi a pasta `spotify_data`, utilizada para persistir os dados do PostgreSQL;
+3. iniciei novamente os containers;
+4. executei o backend.
+
+Dessa vez, o log apresentou as mensagens de inicialização do seeder e confirmou a criação de 160 músicas.
+
+Quando o banco ainda estava preenchido, a aplicação exibia a mensagem informando que o seeding seria ignorado. A mudança no log confirmou que os dados haviam sido realmente recriados.
+
+## Verificação dos novos dados
+
+Depois da recriação, utilizei o Beekeeper Studio para verificar diretamente as tabelas do banco.
+
+Confirmei que as colunas `photo_url`, `header_url` e `cover_url` estavam presentes e preenchidas.
+
+Também abri uma das URLs armazenadas no navegador e confirmei que a imagem era carregada corretamente.
+
+Com isso, validei o fluxo completo dos novos campos:
+
+* definição na entidade;
+* criação da coluna no banco;
+* preenchimento pelo seeder;
+* armazenamento no PostgreSQL;
+* inclusão nos DTOs;
+* retorno pela API.
+
+## Atualização dos identificadores
+
+A recriação do banco gerou novos UUIDs para todos os registros. Com isso, os
+identificadores antigos deixaram de existir: consultar qualquer um deles agora
+retorna `404`.
+
+Percorri o Swagger endpoint por endpoint e reexecutei cada chamada, colando
+as novas respostas de volta nos arquivos de exemplo. Os 21 samples em `user/`,
+`reads-by-id/` e `playlist-lifecycle/` foram sobrescritos com os corpos atuais,
+já refletindo os novos IDs, timestamps e os campos adicionados aos DTOs.
+
+Em seguida, atualizei `ids-used.json` com os novos UUIDs. 
