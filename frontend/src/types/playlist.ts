@@ -1,3 +1,5 @@
+import type { Music } from "./music";
+
 export interface PlaylistSummary {
   id: string;
   name: string;
@@ -6,4 +8,8 @@ export interface PlaylistSummary {
   duration: number;
   createdAt: string;
   updatedAt: string | null;
+}
+
+export interface Playlist extends PlaylistSummary {
+  musics: Music[];
 }
