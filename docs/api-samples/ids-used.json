@@ -1,36 +1,36 @@
 {
   "playlists": {
-    "musicas-curtidas": "48e6ea85-cc21-468e-b443-bce58c4736eb",
-    "playlist-de-academia": "afbe6392-94b3-4509-b414-84c210f93fea",
-    "estudo-concentrado": "8220bded-d573-4a7b-80e0-776a98e821ac",
-    "modo-viagem": "28060a58-9687-4ad2-bdb3-636bc8c3d84a",
-    "lifecycle-test-deleted": "a7cf99d0-e062-4c7b-8ba3-97006200bc9b"
+    "musicas-curtidas": "5869c4cf-5c62-491c-aa33-81a239f33978",
+    "playlist-de-academia": "1500989a-a481-45f9-938c-d2aa2c348560",
+    "estudo-concentrado": "a60b3beb-1d65-4540-8384-b8a60ce53b45",
+    "modo-viagem": "1f06a1f0-bd52-49a2-900b-92dd8735fc44",
+    "lifecycle-test-deleted": "67dce544-dc9d-487f-aa2f-627955c87379"
   },
   "artists": {
-    "artista1": "fa70612e-46b4-43f9-9853-14af75831b14",
-    "artista2": "5d6749f2-1ed6-4708-9db6-73db20099ef9",
-    "artista3": "a2b2274a-8734-4fca-915f-9a30b910cc0e",
-    "artista4": "bdbdc97c-628f-406c-a613-e5c9e8e760a8",
-    "artista5": "fa0f484a-529d-4868-9536-7e5818e5f47b"
+    "artista1": "4d9767de-37f5-4714-bf9c-53b6c42f5cbd",
+    "artista2": "b2cc2ef3-b220-4506-a550-5a7eb9b4c61c",
+    "artista3": "6ef7aad1-6f4f-4fe6-945e-c3166928d712",
+    "artista4": "21c91aed-e74d-486c-aee7-258636c5fe0a",
+    "artista5": "0d479605-6754-412a-89c7-d35b2605c9c6"
   },
   "albums": {
-    "album1-artista1": "9d5a29a2-35e0-47e9-bce2-03a25990d75b",
-    "album2-artista1": "1dc1483e-d3db-4d77-8446-d1225a45007b",
-    "album3-artista1": "fe9d3e76-d930-4bae-b932-bd8cae3c2796",
-    "album4-artista1": "bde61ca6-eab0-48b2-a808-1a55767918ea",
-    "album1-artista2": "9921bc07-193d-4a35-90af-34b3c92f2223"
+    "album1-artista1": "247a4f49-ff4c-46b9-9252-94df93df7ad4",
+    "album2-artista1": "6d89047c-f5d8-4a8d-b077-959c78b92a09",
+    "album3-artista1": "4053a8ba-7737-4f55-8c56-fedffc1da828",
+    "album4-artista1": "addfae7a-70c9-4d72-9dd4-79ba56ecae25",
+    "album1-artista2": "2ddf762c-e5ef-4488-b003-2e1178db71fa"
   },
   "musics": {
-    "musica1-album1-artista1": "11b6d77e-07f8-4fc3-8328-682648d4f6b7",
-    "musica2-album1-artista1": "d00fe526-a420-4215-bb8a-ee17ce882d8a",
-    "musica3-album1-artista1": "b06d222e-80b1-49b6-af88-706ef72f85f8",
-    "musica4-album1-artista1": "8fd46f50-7bd0-4d60-a8ff-139a2db052d9",
-    "musica5-album1-artista1": "efd09c94-c618-42b1-85a6-1869b30459c0",
-    "musica6-album1-artista1": "fa0edb54-bfaa-43ef-849c-34d0b67a94b4",
-    "musica8-album1-artista1": "b21fff0f-dcd4-4071-b761-f550fa983f63",
-    "musica8-album2-artista1": "f5ec803f-44d0-4f8a-845f-e0371c8308aa",
-    "musica8-album3-artista1": "5ad816ac-04af-437b-bd8e-9084dae8a31b",
-    "musica8-album4-artista1": "0577aa47-cba2-4386-9d4a-b6ab31ee4e76",
-    "musica8-album1-artista2": "33f66d24-c349-47aa-ac35-719e0eea7760"
+    "musica1-album1-artista1": "bb4dcb9e-f150-406a-86c8-59d60d138ea8",
+    "musica2-album1-artista1": "adf81bda-4379-4fa1-96fa-148985c6df3e",
+    "musica3-album1-artista1": "5aacda2a-8f09-48eb-850d-a93530017003",
+    "musica4-album1-artista1": "cae7859f-554e-4df7-83f6-07b4638f5195",
+    "musica5-album1-artista1": "d05ac5be-52c7-4f89-b393-0a758e50c5a2",
+    "musica6-album1-artista1": "680b156b-f557-433d-94ef-f55e54c52efe",
+    "musica8-album1-artista1": "1bea18eb-ef74-4578-82f3-f1b72062fa2a",
+    "musica8-album2-artista1": "90cfa877-afed-4f7e-889b-828de3377845",
+    "musica8-album3-artista1": "a8f8489b-26fa-4b63-82e9-89e347bf85d3",
+    "musica8-album4-artista1": "f4f8e2f1-9eca-44b9-9067-36c6132700c9",
+    "musica8-album1-artista2": "c99f8d6d-9de1-47c1-9916-7a45f07fdb95"
   }
 }
