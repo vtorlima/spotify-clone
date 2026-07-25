@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import HomePage from './pages/HomePage'
-import PlaylistsPage from './pages/PlaylistsPage'
+import { PlaylistsPage } from "./pages/PlaylistsPage";
 import PlaylistDetailsPage from './pages/PlaylistDetailsPage'
 import ArtistPage from './pages/ArtistPage'
 import AlbumPage from './pages/AlbumPage'
