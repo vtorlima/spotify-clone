@@ -77,7 +77,12 @@ export default function PlaylistDetailsPage() {
 
           <div className="flex flex-col pt-2">
             {playlist.musics.map((music, index) => (
-              <MusicRow key={music.id} music={music} position={index + 1} />
+              <MusicRow
+                key={music.id}
+                music={music}
+                position={index + 1}
+                queue={playlist.musics}
+              />
             ))}
           </div>
         </div>
