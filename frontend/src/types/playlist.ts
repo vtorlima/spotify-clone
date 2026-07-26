@@ -6,6 +6,7 @@ export interface PlaylistSummary {
   description: string | null;
   musicQtd: number;
   duration: number;
+  coverImageUrls: string[];
   createdAt: string;
   updatedAt: string | null;
 }

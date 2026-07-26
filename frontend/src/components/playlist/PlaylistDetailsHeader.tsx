@@ -1,6 +1,7 @@
 import type { Playlist } from "../../types/playlist";
 import { formatPlaylistDuration } from "../../utils/formatDuration";
 import { formatDate } from "../../utils/formatDate";
+import { PlaylistCover } from "./PlaylistCover";
 
 interface PlaylistDetailsHeaderProps {
   playlist: Playlist;
@@ -11,7 +12,7 @@ export function PlaylistDetailsHeader({ playlist }: PlaylistDetailsHeaderProps) 
 
   return (
     <header className="flex flex-col gap-4 md:flex-row md:items-end">
-      <div className="h-40 w-40 shrink-0 rounded-md bg-background-elements" />
+      <PlaylistCover coverImageUrls={playlist.coverImageUrls} className="h-40 w-40 shrink-0" />
 
       <div className="flex flex-col gap-2">
         <span className="text-12px font-semibold uppercase text-text-subdued">Playlist</span>

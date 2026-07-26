@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { PlaylistSummary } from "../../types/playlist";
 import { formatPlaylistDuration } from "../../utils/formatDuration";
+import { PlaylistCover } from "./PlaylistCover";
 
 interface PlaylistCardProps {
   playlist: PlaylistSummary;
@@ -14,7 +15,9 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
       to={`/playlist/${playlist.id}`}
       className="group flex flex-col gap-3 rounded-lg bg-background-base p-4 transition-colors hover:bg-background-highlight"
     >
-      <div className="relative aspect-square w-full rounded-md bg-background-elements">
+      <div className="relative aspect-square w-full">
+        <PlaylistCover coverImageUrls={playlist.coverImageUrls} className="h-full w-full" />
+
         <div
           aria-hidden="true"
           className="pointer-events-none absolute right-2 bottom-2 flex h-13 w-13 translate-y-1 items-center justify-center rounded-full bg-accent text-black opacity-0 transition duration-150 group-hover:translate-y-0 group-hover:opacity-100"

@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 public record GetPlaylistDTO(UUID id, String name, String description, int musicQtd,
-                             int duration, List<GetMusicDTO> musics,
-                             Instant createdAt, Instant updatedAt ) {
+                             int duration, List<String> coverImageUrls,
+                             List<GetMusicDTO> musics,
+                             Instant createdAt, Instant updatedAt) {
 
     public GetPlaylistDTO(Playlist playlist) {
         this(
@@ -18,9 +19,26 @@ public record GetPlaylistDTO(UUID id, String name, String description, int music
                 playlist.getDescription(),
                 playlist.getMusicQtd(),
                 playlist.getDuration(),
+                getCoverImageUrls(playlist),
                 playlist.getSongs().stream().map(song -> new GetMusicDTO(song)).toList(),
                 playlist.getCreatedAt(),
                 playlist.getUpdatedAt()
         );
+    }
+
+    private static List<String> getCoverImageUrls(Playlist playlist) {
+        if (playlist.getSongs() == null || playlist.getSongs().isEmpty()) {
+            return List.of();
+        }
+
+        if (playlist.getSongs().size() < 4) {
+            return List.of(playlist.getSongs().get(0).getAlbum().getCoverUrl());
+        }
+
+        return playlist.getSongs()
+                .stream()
+                .limit(4)
+                .map(music -> music.getAlbum().getCoverUrl())
+                .toList();
     }
 }
