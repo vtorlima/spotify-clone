@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import {
   FiPause,
@@ -20,6 +21,17 @@ export default function BottomPlayer() {
   const duration = currentTrack?.duration ?? 0;
   const effectiveVolume = isMuted ? 0 : volume;
   const isSilent = isMuted || volume === 0;
+
+  const progressPercent =
+    duration > 0 ? Math.min(100, (progress / duration) * 100) : 0;
+
+  const progressRangeStyle = {
+    "--range-progress": `${progressPercent}%`,
+  } as CSSProperties;
+
+  const volumeRangeStyle = {
+    "--range-progress": `${effectiveVolume * 100}%`,
+  } as CSSProperties;
 
   return (
     <footer className="flex h-20 shrink-0 items-center gap-4 border-t border-divider bg-black px-4">
@@ -105,7 +117,8 @@ export default function BottomPlayer() {
             onChange={(event) => seek(Number(event.target.value))}
             disabled={!currentTrack}
             aria-label="Progresso da musica"
-            className="h-1 flex-1 cursor-pointer accent-accent disabled:cursor-default"
+            style={progressRangeStyle}
+            className="player-range flex-1 disabled:cursor-default"
           />
           <span className="w-10 text-11px tabular-nums text-text-subdued">
             {formatTime(duration)}
@@ -134,7 +147,8 @@ export default function BottomPlayer() {
           value={effectiveVolume}
           onChange={(event) => setVolume(Number(event.target.value))}
           aria-label="Volume"
-          className="h-1 w-24 cursor-pointer accent-accent"
+          style={volumeRangeStyle}
+          className="player-range w-24"
         />
       </div>
     </footer>
