@@ -35,3 +35,7 @@ export function formatTrackDuration(totalSeconds: number): string {
 
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
+
+export function formatTime(totalSeconds: number): string {
+  return formatTrackDuration(totalSeconds);
+}
