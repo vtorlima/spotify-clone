@@ -1,7 +1,142 @@
+import { Link } from "react-router-dom";
+import {
+  FiPause,
+  FiPlay,
+  FiPlusCircle,
+  FiSkipBack,
+  FiSkipForward,
+  FiVolume2,
+  FiVolumeX,
+} from "react-icons/fi";
+import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
+import { formatTime } from "../../utils/formatDuration";
+
 export default function BottomPlayer() {
+  const { currentTrack, isPlaying, progress, volume, isMuted } =
+    usePlayerState();
+  const { togglePlay, next, previous, seek, setVolume, toggleMute } =
+    usePlayerActions();
+
+  const duration = currentTrack?.duration ?? 0;
+  const effectiveVolume = isMuted ? 0 : volume;
+  const isSilent = isMuted || volume === 0;
+
   return (
-    <footer className="flex h-16 shrink-0 items-center p-[10px]">
-      <p className="text-12px text-text-subdued">Nenhuma música tocando</p>
+    <footer className="flex h-20 shrink-0 items-center gap-4 border-t border-divider bg-black px-4">
+      <div className="flex min-w-0 items-center gap-3 md:w-[30%]">
+        {currentTrack ? (
+          <>
+            <img
+              src={currentTrack.albumCoverUrl}
+              alt={`Capa do album ${currentTrack.albumTitle}`}
+              className="h-14 w-14 shrink-0 rounded-md object-cover"
+            />
+            <div className="min-w-0">
+              <p className="truncate text-16px text-text-base">
+                {currentTrack.title}
+              </p>
+              <Link
+                to={`/artist/${currentTrack.artistId}`}
+                className="block truncate text-12px text-text-subdued hover:text-text-base hover:underline"
+              >
+                {currentTrack.artistName}
+              </Link>
+            </div>
+            <button
+              type="button"
+              aria-label="Adicionar musica a playlist"
+              className="ml-2 hidden text-text-subdued hover:text-text-base lg:block"
+            >
+              <FiPlusCircle className="text-[18px]" />
+            </button>
+          </>
+        ) : (
+          <p className="text-12px text-text-subdued">
+            Nenhuma musica selecionada
+          </p>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col items-center gap-2">
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={previous}
+            disabled={!currentTrack}
+            aria-label="Faixa anterior"
+            className="text-text-subdued hover:text-text-base disabled:cursor-default disabled:opacity-40"
+          >
+            <FiSkipBack className="text-[20px]" />
+          </button>
+          <button
+            type="button"
+            onClick={togglePlay}
+            disabled={!currentTrack}
+            aria-label={isPlaying ? "Pausar" : "Reproduzir"}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-text-base text-black transition hover:scale-105 disabled:cursor-default disabled:opacity-40"
+          >
+            {isPlaying ? (
+              <FiPause className="text-[18px]" />
+            ) : (
+              <FiPlay className="translate-x-[1px] text-[18px]" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            disabled={!currentTrack}
+            aria-label="Proxima faixa"
+            className="text-text-subdued hover:text-text-base disabled:cursor-default disabled:opacity-40"
+          >
+            <FiSkipForward className="text-[20px]" />
+          </button>
+        </div>
+
+        <div className="flex w-full max-w-[32rem] items-center gap-2">
+          <span className="w-10 text-right text-11px tabular-nums text-text-subdued">
+            {formatTime(progress)}
+          </span>
+          <input
+            type="range"
+            min={0}
+            max={duration || 1}
+            step={1}
+            value={progress}
+            onChange={(event) => seek(Number(event.target.value))}
+            disabled={!currentTrack}
+            aria-label="Progresso da musica"
+            className="h-1 flex-1 cursor-pointer accent-accent disabled:cursor-default"
+          />
+          <span className="w-10 text-11px tabular-nums text-text-subdued">
+            {formatTime(duration)}
+          </span>
+        </div>
+      </div>
+
+      <div className="hidden items-center justify-end gap-2 md:flex md:w-[30%]">
+        <button
+          type="button"
+          onClick={toggleMute}
+          aria-label={isSilent ? "Ativar som" : "Silenciar"}
+          className="text-text-subdued hover:text-text-base"
+        >
+          {isSilent ? (
+            <FiVolumeX className="text-[18px]" />
+          ) : (
+            <FiVolume2 className="text-[18px]" />
+          )}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={effectiveVolume}
+          onChange={(event) => setVolume(Number(event.target.value))}
+          aria-label="Volume"
+          className="h-1 w-24 cursor-pointer accent-accent"
+        />
+      </div>
     </footer>
-  )
+  );
 }
