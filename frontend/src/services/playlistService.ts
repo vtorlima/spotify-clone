@@ -43,3 +43,10 @@ export function addMusicToPlaylist(
 ): Promise<Playlist> {
   return apiPatch<Playlist>(`/playlist/${playlistId}/${musicId}`);
 }
+
+export function removeMusicFromPlaylist(
+  playlistId: string,
+  musicId: string
+): Promise<void> {
+  return apiDelete<void>(`/playlist/${playlistId}/${musicId}`);
+}
