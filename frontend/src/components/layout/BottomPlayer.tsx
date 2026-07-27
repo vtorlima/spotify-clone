@@ -44,9 +44,12 @@ export default function BottomPlayer() {
               className="h-14 w-14 shrink-0 rounded-md object-cover"
             />
             <div className="min-w-0">
-              <p className="truncate text-16px text-text-base">
+              <Link
+                to={`/album/${currentTrack.albumId}`}
+                className="block truncate text-16px text-text-base hover:underline"
+              >
                 {currentTrack.title}
-              </p>
+              </Link>
               <Link
                 to={`/artist/${currentTrack.artistId}`}
                 className="block truncate text-12px text-text-subdued hover:text-text-base hover:underline"
