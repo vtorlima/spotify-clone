@@ -2,6 +2,7 @@ package com.catijr.backend.Services;
 
 
 import com.catijr.backend.Entities.Album;
+import com.catijr.backend.Entities.Artist;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Repositories.ArtistRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,10 @@ public class ArtistService {
         var artist = artistRepository.findById(artistId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return artist.albums;
+    }
+
+    public Artist findById(UUID artistId) {
+        return artistRepository.findById(artistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

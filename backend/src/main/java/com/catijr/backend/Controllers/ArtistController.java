@@ -1,6 +1,7 @@
 package com.catijr.backend.Controllers;
 
 import com.catijr.backend.DTOs.Album.GetAlbumDTO;
+import com.catijr.backend.DTOs.Artist.GetArtistDTO;
 import com.catijr.backend.DTOs.Music.GetMusicDTO;
 import com.catijr.backend.Services.ArtistService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ import java.util.stream.Collectors;
 public class ArtistController {
 
     private final ArtistService artistService;
+
+    @GetMapping("/{artistId}")
+    public ResponseEntity<GetArtistDTO> getArtistById(@PathVariable String artistId) {
+        var artist = artistService.findById(UUID.fromString(artistId));
+
+        return ResponseEntity.ok(new GetArtistDTO(artist));
+    }
 
     @GetMapping("/{artistId}/popularMusics")
     public ResponseEntity<List<GetMusicDTO>> getPopularMusicsByArtistId(@PathVariable String artistId) {
