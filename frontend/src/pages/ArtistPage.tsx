@@ -9,6 +9,10 @@ import {
 import { useAsyncData } from "../hooks/useAsyncData";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
+import { ArtistHeader } from "../components/artist/ArtistHeader";
+import { ArtistAbout } from "../components/artist/ArtistAbout";
+import { ArtistPopularSongs } from "../components/artist/ArtistPopularSongs";
+import { ArtistAlbums } from "../components/artist/ArtistAlbums";
 
 export default function ArtistPage() {
   const { artistId } = useParams<{ artistId: string }>();
@@ -63,13 +67,12 @@ export default function ArtistPage() {
 
   const { artist, popularSongs, albums } = data;
 
-  // UI completa (header, populares, sobre, discografia) chega no próximo commit.
   return (
     <section className="flex flex-col gap-8 p-6">
-      <h1 className="text-64px font-bold leading-none text-text-base">{artist.name}</h1>
-      <p className="text-12px text-text-subdued">
-        {popularSongs.length} músicas populares · {albums.length} álbuns
-      </p>
+      <ArtistHeader artist={artist} />
+      <ArtistPopularSongs songs={popularSongs} />
+      <ArtistAbout about={artist.about} />
+      <ArtistAlbums albums={albums} />
     </section>
   );
 }
