@@ -14,3 +14,13 @@ export interface PlaylistSummary {
 export interface Playlist extends PlaylistSummary {
   musics: Music[];
 }
+
+export interface CreatePlaylistInput {
+  name: string;
+  description?: string;
+}
+
+export interface UpdatePlaylistInput {
+  name?: string;
+  description?: string;
+}
