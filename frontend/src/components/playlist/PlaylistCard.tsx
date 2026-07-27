@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { PlaylistSummary } from "../../types/playlist";
 import { formatPlaylistDuration } from "../../utils/formatDuration";
+import { PlayButton } from "../ui/PlayButton";
 import { PlaylistCover } from "./PlaylistCover";
 
 interface PlaylistCardProps {
@@ -18,14 +19,11 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
       <div className="relative aspect-square w-full">
         <PlaylistCover coverImageUrls={playlist.coverImageUrls} className="h-full w-full" />
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-2 bottom-2 flex h-13 w-13 translate-y-1 items-center justify-center rounded-full bg-accent text-black opacity-0 transition duration-150 group-hover:translate-y-0 group-hover:opacity-100"
-        >
-          <svg width="30" height="30" viewBox="0 0 16 16" fill="none">
-            <path d="M4 2.5V13.5L13 8L4 2.5Z" fill="currentColor" />
-          </svg>
-        </div>
+        <PlayButton
+          as="span"
+          size="sm"
+          className="pointer-events-none absolute right-2 bottom-2 translate-y-1 opacity-0 duration-150 group-hover:translate-y-0 group-hover:opacity-100"
+        />
       </div>
 
       <div className="flex flex-col gap-1">
