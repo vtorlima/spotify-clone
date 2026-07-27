@@ -1,5 +1,6 @@
 package com.catijr.backend.Services;
 
+import com.catijr.backend.Entities.Album;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Repositories.AlbumRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,11 @@ public class AlbumService {
         var album = albumRepository.findById(albumId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return album.getMusics();
+    }
+
+    public Album findById(UUID albumId) {
+        return albumRepository.findById(albumId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 }
