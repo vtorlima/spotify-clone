@@ -5,6 +5,8 @@ import { getAlbumById } from "../services/albumService";
 import { useAsyncData } from "../hooks/useAsyncData";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
+import { AlbumHeader } from "../components/album/AlbumHeader";
+import { AlbumTrackList } from "../components/album/AlbumTrackList";
 
 export default function AlbumPage() {
   const { albumId } = useParams<{ albumId: string }>();
@@ -55,8 +57,8 @@ export default function AlbumPage() {
 
   return (
     <section className="flex flex-col gap-8 p-6">
-      <h1 className="text-64px font-bold leading-none text-text-base">{album.title}</h1>
-      <p className="text-12px text-text-subdued">{album.musics.length} músicas</p>
+      <AlbumHeader album={album} />
+      <AlbumTrackList tracks={album.musics} />
     </section>
   );
 }
