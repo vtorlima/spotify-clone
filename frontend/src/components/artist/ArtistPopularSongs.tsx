@@ -16,7 +16,13 @@ export function ArtistPopularSongs({ songs }: ArtistPopularSongsProps) {
       ) : (
         <div className="flex flex-col">
           {songs.map((music, index) => (
-            <MusicRow key={music.id} music={music} position={index + 1} queue={songs} />
+            <MusicRow
+              key={music.id}
+              music={music}
+              position={index + 1}
+              queue={songs}
+              showAddToPlaylist
+            />
           ))}
         </div>
       )}

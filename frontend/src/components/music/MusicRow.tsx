@@ -3,14 +3,21 @@ import { FiPause, FiPlay } from "react-icons/fi";
 import type { Music } from "../../types/music";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTrackDuration } from "../../utils/formatDuration";
+import { TrackActionMenu } from "./TrackActionMenu";
 
 interface MusicRowProps {
   music: Music;
   position: number;
   queue?: Music[];
+  showAddToPlaylist?: boolean;
 }
 
-export function MusicRow({ music, position, queue }: MusicRowProps) {
+export function MusicRow({
+  music,
+  position,
+  queue,
+  showAddToPlaylist,
+}: MusicRowProps) {
   const { currentTrack, isPlaying } = usePlayerState();
   const { playTrack, togglePlay } = usePlayerActions();
 
@@ -88,6 +95,12 @@ export function MusicRow({ music, position, queue }: MusicRowProps) {
       <span className="w-12 shrink-0 text-right text-12px text-text-subdued">
         {formatTrackDuration(music.duration)}
       </span>
+
+      {showAddToPlaylist && (
+        <div className="shrink-0 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
+          <TrackActionMenu musicId={music.id} />
+        </div>
+      )}
     </div>
   );
 }

@@ -13,9 +13,10 @@ export interface ActionMenuItem {
 interface ActionMenuProps {
   ariaLabel: string;
   items: ActionMenuItem[];
+  onOpen?: () => void;
 }
 
-export function ActionMenu({ ariaLabel, items }: ActionMenuProps) {
+export function ActionMenu({ ariaLabel, items, onOpen }: ActionMenuProps) {
   const [isOpen, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -57,6 +58,16 @@ export function ActionMenu({ ariaLabel, items }: ActionMenuProps) {
     setOpen(false);
   }
 
+  function handleToggle() {
+    setOpen((current) => {
+      const next = !current;
+      if (next) {
+        onOpen?.();
+      }
+      return next;
+    });
+  }
+
   return (
     <div ref={containerRef} className="relative inline-block">
       <button
@@ -64,7 +75,7 @@ export function ActionMenu({ ariaLabel, items }: ActionMenuProps) {
         aria-label={ariaLabel}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        onClick={() => setOpen((current) => !current)}
+        onClick={handleToggle}
         className="flex h-10 w-10 items-center justify-center rounded-full text-text-subdued transition hover:bg-background-highlight hover:text-text-base"
       >
         <FiMoreHorizontal className="text-[20px]" />

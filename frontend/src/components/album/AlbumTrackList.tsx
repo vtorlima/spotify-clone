@@ -22,7 +22,13 @@ export function AlbumTrackList({ tracks }: AlbumTrackListProps) {
 
       <div className="flex flex-col pt-2">
         {tracks.map((music, index) => (
-          <MusicRow key={music.id} music={music} position={index + 1} queue={tracks} />
+          <MusicRow
+            key={music.id}
+            music={music}
+            position={index + 1}
+            queue={tracks}
+            showAddToPlaylist
+          />
         ))}
       </div>
     </div>

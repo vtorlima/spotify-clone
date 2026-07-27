@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api";
 import type {
   CreatePlaylistInput,
   Playlist,
@@ -35,4 +35,11 @@ export function updatePlaylistAttributes(
 
 export function deletePlaylist(playlistId: string): Promise<void> {
   return apiDelete<void>(`/playlist/${playlistId}`);
+}
+
+export function addMusicToPlaylist(
+  playlistId: string,
+  musicId: string
+): Promise<Playlist> {
+  return apiPatch<Playlist>(`/playlist/${playlistId}/${musicId}`);
 }
