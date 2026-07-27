@@ -1,9 +1,21 @@
-import { useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ApiError } from "../services/api";
-import { getPlaylistById } from "../services/playlistService";
+import {
+  deletePlaylist,
+  getPlaylistById,
+  updatePlaylistAttributes,
+} from "../services/playlistService";
 import { useAsyncData } from "../hooks/useAsyncData";
+import { useToast } from "../hooks/useToast";
+import { usePlayerActions } from "../hooks/usePlayer";
 import { PlaylistDetailsHeader } from "../components/playlist/PlaylistDetailsHeader";
+import { PlaylistActionsBar } from "../components/playlist/PlaylistActionsBar";
+import {
+  PlaylistFormModal,
+  type PlaylistFormValues,
+} from "../components/playlist/PlaylistFormModal";
+import { ConfirmDialog } from "../components/ui/ConfirmDialog";
 import { MusicRow } from "../components/music/MusicRow";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
@@ -11,6 +23,9 @@ import { EmptyState } from "../components/ui/EmptyState";
 
 export default function PlaylistDetailsPage() {
   const { playlistId } = useParams<{ playlistId: string }>();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  const { playTrack } = usePlayerActions();
 
   const fetchPlaylist = useCallback(() => {
     if (!playlistId) {
@@ -20,6 +35,62 @@ export default function PlaylistDetailsPage() {
   }, [playlistId]);
 
   const { data: playlist, isLoading, error, reload } = useAsyncData(fetchPlaylist);
+
+  const [isEditOpen, setEditOpen] = useState(false);
+  const [isSaving, setSaving] = useState(false);
+  const [isDeleteOpen, setDeleteOpen] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
+
+  function handlePlayPlaylist() {
+    if (!playlist || playlist.musics.length === 0) {
+      return;
+    }
+    playTrack(playlist.musics[0], playlist.musics);
+  }
+
+  async function handleEditSubmit(values: PlaylistFormValues) {
+    if (!playlist) {
+      return;
+    }
+
+    setSaving(true);
+
+    try {
+      await updatePlaylistAttributes(playlist.id, values);
+      setEditOpen(false);
+      showToast("Playlist atualizada.");
+      reload();
+    } catch (caught) {
+      const message =
+        caught instanceof ApiError
+          ? caught.message
+          : "Não foi possível atualizar a playlist.";
+      showToast(message, "error");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleConfirmDelete() {
+    if (!playlist) {
+      return;
+    }
+
+    setDeleting(true);
+
+    try {
+      await deletePlaylist(playlist.id);
+      showToast("Playlist excluída.");
+      navigate("/playlists");
+    } catch (caught) {
+      const message =
+        caught instanceof ApiError
+          ? caught.message
+          : "Não foi possível apagar a playlist.";
+      showToast(message, "error");
+      setDeleting(false);
+    }
+  }
 
   if (isLoading) {
     return <LoadingState message="Carregando playlist..." />;
@@ -60,6 +131,13 @@ export default function PlaylistDetailsPage() {
     <section className="flex flex-col gap-8 p-6">
       <PlaylistDetailsHeader playlist={playlist} />
 
+      <PlaylistActionsBar
+        canPlay={playlist.musics.length > 0}
+        onPlay={handlePlayPlaylist}
+        onEdit={() => setEditOpen(true)}
+        onDelete={() => setDeleteOpen(true)}
+      />
+
       {playlist.musics.length === 0 ? (
         <EmptyState
           title="Essa playlist ainda não tem músicas"
@@ -87,6 +165,25 @@ export default function PlaylistDetailsPage() {
           </div>
         </div>
       )}
+
+      <PlaylistFormModal
+        isOpen={isEditOpen}
+        mode="edit"
+        initialValues={{ name: playlist.name, description: playlist.description ?? "" }}
+        isSubmitting={isSaving}
+        onClose={() => setEditOpen(false)}
+        onSubmit={handleEditSubmit}
+      />
+
+      <ConfirmDialog
+        isOpen={isDeleteOpen}
+        title="Apagar playlist"
+        message={`Tem certeza que deseja apagar "${playlist.name}"? Essa ação não pode ser desfeita.`}
+        confirmLabel="Apagar"
+        isProcessing={isDeleting}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteOpen(false)}
+      />
     </section>
   );
 }
