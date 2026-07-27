@@ -7,21 +7,26 @@ import PlaylistDetailsPage from './pages/PlaylistDetailsPage'
 import ArtistPage from './pages/ArtistPage'
 import AlbumPage from './pages/AlbumPage'
 import NotFoundPage from './pages/NotFoundPage'
+import { ToastViewport } from './components/ui/ToastViewport'
 import { PlayerProvider } from './stores/PlayerContext'
+import { ToastProvider } from './stores/ToastContext'
 
 export default function App() {
   return (
-    <PlayerProvider>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="playlists" element={<PlaylistsPage />} />
-          <Route path="playlist/:playlistId" element={<PlaylistDetailsPage />} />
-          <Route path="artist/:artistId" element={<ArtistPage />} />
-          <Route path="album/:albumId" element={<AlbumPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </PlayerProvider>
+    <ToastProvider>
+      <PlayerProvider>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="playlists" element={<PlaylistsPage />} />
+            <Route path="playlist/:playlistId" element={<PlaylistDetailsPage />} />
+            <Route path="artist/:artistId" element={<ArtistPage />} />
+            <Route path="album/:albumId" element={<AlbumPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+        <ToastViewport />
+      </PlayerProvider>
+    </ToastProvider>
   )
 }
