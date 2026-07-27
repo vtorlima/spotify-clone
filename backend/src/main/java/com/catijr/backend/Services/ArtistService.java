@@ -25,7 +25,7 @@ public class ArtistService {
 
         List<Music> pop = artist.getSongs();
 
-        pop.sort((m1, m2) -> Integer.compare(m1.getTimesListen(), m2.getTimesListen()));
+        pop.sort((m1, m2) -> Integer.compare(m2.getTimesListen(), m1.getTimesListen()));
 
         return pop;
     }
