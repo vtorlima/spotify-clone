@@ -1,22 +1,68 @@
-import type { CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import { useState, type CSSProperties, type MouseEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
+  FiDisc,
   FiPause,
   FiPlay,
+  FiPlus,
   FiSkipBack,
   FiSkipForward,
+  FiUser,
   FiVolume2,
   FiVolumeX,
 } from "react-icons/fi";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTime } from "../../utils/formatDuration";
 import { LikedSongButton } from "../music/LikedSongButton";
+import { ContextMenu, type ContextMenuItem } from "../ui/ContextMenu";
+import { useAddToPlaylist } from "../../hooks/useAddToPlaylist";
 
 export default function BottomPlayer() {
   const { currentTrack, isPlaying, progress, volume, isMuted } =
     usePlayerState();
   const { togglePlay, next, previous, seek, setVolume, toggleMute } =
     usePlayerActions();
+  const navigate = useNavigate();
+  const { playlists, loadPlaylists, addToPlaylist } = useAddToPlaylist();
+  const [menu, setMenu] = useState({ isOpen: false, x: 0, y: 0 });
+
+  function openTitleMenu(event: MouseEvent) {
+    event.preventDefault(); // troca o menu nativo do navegador pelo nosso
+    loadPlaylists(); // carrega as playlists ao abrir (lazy)
+    setMenu({ isOpen: true, x: event.clientX, y: event.clientY });
+  }
+
+  function closeMenu() {
+    setMenu((current) => ({ ...current, isOpen: false }));
+  }
+
+  const menuItems: ContextMenuItem[] = currentTrack
+    ? [
+        {
+          id: "artist",
+          label: "Ir para artista",
+          icon: <FiUser className="text-[16px]" />,
+          onSelect: () => navigate(`/artist/${currentTrack.artistId}`),
+        },
+        {
+          id: "album",
+          label: "Ir para álbum",
+          icon: <FiDisc className="text-[16px]" />,
+          onSelect: () => navigate(`/album/${currentTrack.albumId}`),
+        },
+        {
+          id: "add-header",
+          label: "Adicionar à playlist",
+          icon: <FiPlus className="text-[16px]" />,
+          disabled: true,
+        },
+        ...(playlists ?? []).map((playlist) => ({
+          id: playlist.id,
+          label: playlist.name,
+          onSelect: () => addToPlaylist(playlist.id, currentTrack.id),
+        })),
+      ]
+    : [];
 
   const duration = currentTrack?.duration ?? 0;
   const effectiveVolume = isMuted ? 0 : volume;
@@ -46,6 +92,7 @@ export default function BottomPlayer() {
             <div className="min-w-0">
               <Link
                 to={`/album/${currentTrack.albumId}`}
+                onContextMenu={openTitleMenu}
                 className="block truncate text-16px text-text-base hover:underline"
               >
                 {currentTrack.title}
@@ -148,6 +195,14 @@ export default function BottomPlayer() {
           className="player-range w-24"
         />
       </div>
+
+      <ContextMenu
+        isOpen={menu.isOpen}
+        x={menu.x}
+        y={menu.y}
+        items={menuItems}
+        onClose={closeMenu}
+      />
     </footer>
   );
 }
