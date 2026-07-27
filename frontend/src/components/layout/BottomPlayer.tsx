@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   FiPause,
   FiPlay,
-  FiPlusCircle,
   FiSkipBack,
   FiSkipForward,
   FiVolume2,
@@ -11,6 +10,7 @@ import {
 } from "react-icons/fi";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTime } from "../../utils/formatDuration";
+import { LikedSongButton } from "../music/LikedSongButton";
 
 export default function BottomPlayer() {
   const { currentTrack, isPlaying, progress, volume, isMuted } =
@@ -54,13 +54,7 @@ export default function BottomPlayer() {
                 {currentTrack.artistName}
               </Link>
             </div>
-            <button
-              type="button"
-              aria-label="Adicionar musica a playlist"
-              className="ml-2 hidden text-text-subdued hover:text-text-base lg:block"
-            >
-              <FiPlusCircle className="text-[18px]" />
-            </button>
+            <LikedSongButton music={currentTrack} />
           </>
         ) : (
           <p className="text-12px text-text-subdued">
