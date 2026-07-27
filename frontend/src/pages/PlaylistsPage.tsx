@@ -1,7 +1,14 @@
-import { useCallback } from "react";
-import { getUserPlaylists } from "../services/playlistService";
+import { useCallback, useState } from "react";
+import { ApiError } from "../services/api";
+import { createPlaylist, getUserPlaylists } from "../services/playlistService";
 import { useAsyncData } from "../hooks/useAsyncData";
+import { useToast } from "../hooks/useToast";
 import { PlaylistCard } from "../components/playlist/PlaylistCard";
+import {
+  PlaylistFormModal,
+  type PlaylistFormValues,
+} from "../components/playlist/PlaylistFormModal";
+import { Button } from "../components/ui/Button";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
 import { EmptyState } from "../components/ui/EmptyState";
@@ -9,10 +16,38 @@ import { EmptyState } from "../components/ui/EmptyState";
 export function PlaylistsPage() {
   const fetchPlaylists = useCallback(() => getUserPlaylists(), []);
   const { data: playlists, isLoading, error, reload } = useAsyncData(fetchPlaylists);
+  const { showToast } = useToast();
+
+  const [isCreateOpen, setCreateOpen] = useState(false);
+  const [isCreating, setCreating] = useState(false);
+
+  async function handleCreate(values: PlaylistFormValues) {
+    setCreating(true);
+
+    try {
+      await createPlaylist(values);
+      setCreateOpen(false);
+      showToast("Playlist criada.");
+      reload();
+    } catch (caught) {
+      const message =
+        caught instanceof ApiError
+          ? caught.message
+          : "Não foi possível criar a playlist.";
+      showToast(message, "error");
+    } finally {
+      setCreating(false);
+    }
+  }
 
   return (
     <section className="flex flex-col gap-6 p-6">
-      <h1 className="text-20px font-bold text-text-base">Suas playlists</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-20px font-bold text-text-base">Suas playlists</h1>
+        <Button type="button" onClick={() => setCreateOpen(true)}>
+          Criar playlist
+        </Button>
+      </div>
 
       {isLoading && <LoadingState message="Carregando suas playlists..." />}
 
@@ -38,6 +73,14 @@ export function PlaylistsPage() {
           ))}
         </div>
       )}
+
+      <PlaylistFormModal
+        isOpen={isCreateOpen}
+        mode="create"
+        isSubmitting={isCreating}
+        onClose={() => setCreateOpen(false)}
+        onSubmit={handleCreate}
+      />
     </section>
   );
 }
