@@ -2,6 +2,7 @@ package com.catijr.backend.Services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.catijr.backend.DTOs.Album.GetAlbumNoMusicsDTO;
@@ -29,7 +30,8 @@ public class UserService {
     private final ArtistRepository      artistRepository;
 
     public List<GetPlaylistNoMusicDTO> getUserPlaylists(){
-        List<Playlist> playlists = playlistRepository.findAll();
+        List<Playlist> playlists =
+            playlistRepository.findAll(Sort.by(Sort.Direction.ASC, "createdAt"));
 
         return playlists.stream().map(GetPlaylistNoMusicDTO::new).toList();
     }
