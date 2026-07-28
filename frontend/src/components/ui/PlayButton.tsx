@@ -3,6 +3,7 @@ type PlayButtonSize = "sm" | "lg";
 interface PlayButtonProps {
   as?: "button" | "span";
   size?: PlayButtonSize;
+  playing?: boolean;
   onClick?: () => void;
   disabled?: boolean;
   ariaLabel?: string;
@@ -22,6 +23,7 @@ const iconSize: Record<PlayButtonSize, number> = {
 export function PlayButton({
   as = "button",
   size = "lg",
+  playing = false,
   onClick,
   disabled = false,
   ariaLabel = "Tocar",
@@ -35,7 +37,14 @@ export function PlayButton({
       fill="none"
       aria-hidden="true"
     >
-      <path d="M4 2.5V13.5L13 8L4 2.5Z" fill="currentColor" />
+      {playing ? (
+        <>
+          <rect x="4" y="2.5" width="3" height="11" rx="1" fill="currentColor" />
+          <rect x="9" y="2.5" width="3" height="11" rx="1" fill="currentColor" />
+        </>
+      ) : (
+        <path d="M4 2.5V13.5L13 8L4 2.5Z" fill="currentColor" />
+      )}
     </svg>
   );
 
