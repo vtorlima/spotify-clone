@@ -8,3 +8,7 @@ export function getAlbumById(albumId: string): Promise<Album> {
 export function getAllAlbums(): Promise<AlbumSummary[]> {
   return apiGet<AlbumSummary[]>("/album");
 }
+
+export function getUserRecentAlbums(): Promise<AlbumSummary[]> {
+  return apiGet<AlbumSummary[]>("/user/recentAlbums");
+}

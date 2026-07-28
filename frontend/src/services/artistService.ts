@@ -11,6 +11,10 @@ export function getAllArtists(): Promise<Artist[]> {
   return apiGet<Artist[]>("/artist");
 }
 
+export function getUserRecentArtists(): Promise<Artist[]> {
+  return apiGet<Artist[]>("/user/recentArtists");
+}
+
 export function getArtistPopularSongs(artistId: string): Promise<Music[]> {
   return apiGet<Music[]>(`/artist/${artistId}/popularMusics`);
 }
