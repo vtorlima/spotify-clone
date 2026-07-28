@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from "react";
+import { useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FiPause, FiPlay } from "react-icons/fi";
 import type { Music } from "../../types/music";
@@ -13,9 +13,10 @@ interface MusicRowProps {
   music: Music;
   position: number;
   queue?: Music[];
+  dragHandle?: ReactNode;
 }
 
-export function MusicRow({ music, position, queue }: MusicRowProps) {
+export function MusicRow({ music, position, queue, dragHandle }: MusicRowProps) {
   const { currentTrack, isPlaying } = usePlayerState();
   const { playTrack, togglePlay } = usePlayerActions();
   const { items: menuItems, loadPlaylists } = useTrackMenuItems(music);
@@ -48,6 +49,12 @@ export function MusicRow({ music, position, queue }: MusicRowProps) {
       onContextMenu={openRowMenu}
       className="group flex items-center gap-4 rounded-md px-4 py-2 transition hover:bg-background-elements"
     >
+      {dragHandle && (
+        <div className="flex w-5 shrink-0 items-center justify-center opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
+          {dragHandle}
+        </div>
+      )}
+
       <button
         type="button"
         onClick={handlePlay}
