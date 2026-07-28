@@ -17,7 +17,7 @@ export function HomeRecentArtistsShelf() {
   const hasArtists = visibleArtists.length > 0;
 
   return (
-    <HomeShelf title="Artistas recentes">
+    <HomeShelf title="Artistas em destaque">
       {isLoading && <LoadingState message="Carregando artistas..." />}
 
       {!isLoading && error && (
