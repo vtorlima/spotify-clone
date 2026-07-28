@@ -62,6 +62,16 @@ export default function PlaylistDetailsPage() {
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
   );
 
+  const handleMusicRemoved = useCallback(
+    (musicId: string) => {
+      setOrderedMusics((current) =>
+        current.filter((music) => music.id !== musicId)
+      );
+      reload();
+    },
+    [reload]
+  );
+
   function handlePlayPlaylist() {
     if (orderedMusics.length === 0) {
       return;
@@ -224,6 +234,10 @@ export default function PlaylistDetailsPage() {
                   position={index + 1}
                   queue={orderedMusics}
                   disabled={isReordering}
+                  playlistContext={{
+                    playlistId: playlist.id,
+                    onRemoved: handleMusicRemoved,
+                  }}
                 />
               ))}
             </div>
