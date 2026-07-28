@@ -15,42 +15,25 @@ export function LikedSongButton({
   variant = "player",
   className = "",
 }: LikedSongButtonProps) {
-  const { ensureLikedPlaylistId, likeSong, unlikeSong } = useLikedSongActions();
+  const { ensureLikedPlaylistId, isLiked, likeSong, unlikeSong } = useLikedSongActions();
   const { showToast } = useToast();
 
-  const [isLiked, setIsLiked] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    let ignore = false;
+    void ensureLikedPlaylistId();
+  }, [ensureLikedPlaylistId]);
 
-    ensureLikedPlaylistId()
-      .then((likedId) => {
-        if (!ignore) {
-          setIsLiked(music.playlistsId.includes(likedId));
-        }
-      })
-      .catch(() => {
-        if (!ignore) {
-          setIsLiked(false);
-        }
-      });
-
-    return () => {
-      ignore = true;
-    };
-  }, [music.id, music.playlistsId, ensureLikedPlaylistId]);
+  const liked = isLiked(music);
 
   async function handleToggle() {
     setIsProcessing(true);
 
     try {
-      if (isLiked) {
+      if (liked) {
         await unlikeSong(music.id);
-        setIsLiked(false); 
       } else {
         await likeSong(music.id);
-        setIsLiked(true);
       }
     } catch {
       showToast("Não foi possível atualizar suas curtidas.", "error");
@@ -60,7 +43,7 @@ export function LikedSongButton({
   }
 
   const visibilityClass =
-    variant === "row" && !isLiked
+    variant === "row" && !liked
       ? "opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
       : "";
 
@@ -71,13 +54,13 @@ export function LikedSongButton({
       type="button"
       onClick={handleToggle}
       disabled={isProcessing}
-      aria-pressed={isLiked}
-      aria-label={isLiked ? "Remover de Músicas Curtidas" : "Adicionar a Músicas Curtidas"}
+      aria-pressed={liked}
+      aria-label={liked ? "Remover de Músicas Curtidas" : "Adicionar a Músicas Curtidas"}
       className={`${spacingClass} flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition disabled:opacity-50 ${
-        isLiked ? "bg-accent text-black" : "text-text-subdued hover:text-text-base"
+        liked ? "bg-accent text-black" : "text-text-subdued hover:text-text-base"
       } ${visibilityClass} ${className}`}
     >
-      {isLiked ? (
+      {liked ? (
         <FiCheck className="text-[14px]" />
       ) : (
         <FiPlus className="text-[18px]" />
