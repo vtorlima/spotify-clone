@@ -1,25 +1,25 @@
+import { useState, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { FiPause, FiPlay } from "react-icons/fi";
 import type { Music } from "../../types/music";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTrackDuration } from "../../utils/formatDuration";
+import { useTrackMenuItems } from "../../hooks/useTrackMenuItems";
 import { TrackActionMenu } from "./TrackActionMenu";
+import { LikedSongButton } from "./LikedSongButton";
+import { ContextMenu } from "../ui/ContextMenu";
 
 interface MusicRowProps {
   music: Music;
   position: number;
   queue?: Music[];
-  showAddToPlaylist?: boolean;
 }
 
-export function MusicRow({
-  music,
-  position,
-  queue,
-  showAddToPlaylist,
-}: MusicRowProps) {
+export function MusicRow({ music, position, queue }: MusicRowProps) {
   const { currentTrack, isPlaying } = usePlayerState();
   const { playTrack, togglePlay } = usePlayerActions();
+  const { items: menuItems, loadPlaylists } = useTrackMenuItems(music);
+  const [menu, setMenu] = useState({ isOpen: false, x: 0, y: 0 });
 
   const isCurrentTrack = currentTrack?.id === music.id;
   const isThisTrackPlaying = isCurrentTrack && isPlaying;
@@ -32,9 +32,20 @@ export function MusicRow({
     playTrack(music, queue ?? [music]);
   }
 
+  function openRowMenu(event: MouseEvent) {
+    event.preventDefault();
+    loadPlaylists();
+    setMenu({ isOpen: true, x: event.clientX, y: event.clientY });
+  }
+
+  function closeRowMenu() {
+    setMenu((current) => ({ ...current, isOpen: false }));
+  }
+
   return (
     <div
       onDoubleClick={handlePlay}
+      onContextMenu={openRowMenu}
       className="group flex items-center gap-4 rounded-md px-4 py-2 transition hover:bg-background-elements"
     >
       <button
@@ -92,15 +103,23 @@ export function MusicRow({
         {music.albumTitle}
       </span>
 
+      <LikedSongButton music={music} variant="row" />
+
       <span className="w-12 shrink-0 text-right text-12px text-text-subdued">
         {formatTrackDuration(music.duration)}
       </span>
 
-      {showAddToPlaylist && (
-        <div className="shrink-0 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
-          <TrackActionMenu musicId={music.id} />
-        </div>
-      )}
+      <div className="shrink-0 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
+        <TrackActionMenu items={menuItems} onOpen={loadPlaylists} />
+      </div>
+
+      <ContextMenu
+        isOpen={menu.isOpen}
+        x={menu.x}
+        y={menu.y}
+        items={menuItems}
+        onClose={closeRowMenu}
+      />
     </div>
   );
 }
