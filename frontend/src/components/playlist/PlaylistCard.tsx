@@ -22,7 +22,9 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
   const musicLabel = playlist.musicQtd === 1 ? "música" : "músicas";
   const isEmpty = playlist.musicQtd === 0;
 
-  const isActivePlaylist = sourceId === playlist.id && currentTrack !== null;
+  // Mesmo esquema "playlist:<id>" do item da biblioteca lateral, p/ sincronizar.
+  const playlistSource = `playlist:${playlist.id}`;
+  const isActivePlaylist = sourceId === playlistSource && currentTrack !== null;
   const isPlayingThis = isActivePlaylist && isPlaying;
 
   async function handlePlay() {
@@ -41,7 +43,7 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
       if (fullPlaylist.musics.length === 0) {
         return;
       }
-      playTrack(fullPlaylist.musics[0], fullPlaylist.musics, playlist.id);
+      playTrack(fullPlaylist.musics[0], fullPlaylist.musics, playlistSource);
     } catch {
       showToast("Não foi possível tocar a playlist.", "error");
     } finally {
