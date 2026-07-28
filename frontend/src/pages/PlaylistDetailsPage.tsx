@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   DndContext,
@@ -26,9 +26,13 @@ import {
 } from "../components/playlist/PlaylistFormModal";
 import { ConfirmDialog } from "../components/ui/ConfirmDialog";
 import { SortableMusicRow } from "../components/music/SortableMusicRow";
+import { PlaylistRecommendations } from "../components/playlist/PlaylistRecommendations";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
 import { EmptyState } from "../components/ui/EmptyState";
+import { getAllMusics } from "../services/musicService";
+import { isLikedPlaylistName } from "../utils/likedPlaylist";
+import { recommendPlaylistMusics } from "../utils/recommendPlaylistMusics";
 import type { Music } from "../types/music";
 
 export default function PlaylistDetailsPage() {
@@ -45,6 +49,23 @@ export default function PlaylistDetailsPage() {
   }, [playlistId]);
 
   const { data: playlist, isLoading, error, reload } = useAsyncData(fetchPlaylist);
+
+  const fetchAllMusics = useCallback(() => getAllMusics(), []);
+  const { data: allMusics } = useAsyncData(fetchAllMusics);
+
+  const isLikedPlaylist = playlist ? isLikedPlaylistName(playlist.name) : false;
+
+  const recommendations = useMemo(() => {
+    if (!playlist || !allMusics || isLikedPlaylist) {
+      return [];
+    }
+    return recommendPlaylistMusics(playlist.musics, allMusics);
+  }, [playlist, allMusics, isLikedPlaylist]);
+
+  const recommendationsSubtitle =
+    playlist && playlist.musics.length === 0
+      ? "As mais tocadas do momento"
+      : "Com base no que está nesta playlist";
 
   const [isEditOpen, setEditOpen] = useState(false);
   const [isSaving, setSaving] = useState(false);
@@ -243,6 +264,15 @@ export default function PlaylistDetailsPage() {
             </div>
           </DndContext>
         </div>
+      )}
+
+      {!isLikedPlaylist && (
+        <PlaylistRecommendations
+          playlistId={playlist.id}
+          recommendations={recommendations}
+          subtitle={recommendationsSubtitle}
+          onAdded={reload}
+        />
       )}
 
       <PlaylistFormModal
