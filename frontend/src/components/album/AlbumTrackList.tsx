@@ -17,18 +17,14 @@ export function AlbumTrackList({ tracks }: AlbumTrackListProps) {
         <span className="w-6 shrink-0 text-right">#</span>
         <span className="w-10 shrink-0" />
         <span className="min-w-0 flex-1">Título</span>
+        <span className="w-6 shrink-0" />
         <span className="w-12 shrink-0 text-right">Duração</span>
+        <span className="w-10 shrink-0" />
       </div>
 
       <div className="flex flex-col pt-2">
         {tracks.map((music, index) => (
-          <MusicRow
-            key={music.id}
-            music={music}
-            position={index + 1}
-            queue={tracks}
-            showAddToPlaylist
-          />
+          <MusicRow key={music.id} music={music} position={index + 1} queue={tracks} />
         ))}
       </div>
     </div>
