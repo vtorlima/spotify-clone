@@ -17,6 +17,10 @@ public class AlbumService {
 
     private final AlbumRepository albumRepository;
 
+    public List<Album> getAllAlbums() {
+        return albumRepository.findAll();
+    }
+
     public List<Music> getMusicsByAlbumId(UUID albumId) {
         var album = albumRepository.findById(albumId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

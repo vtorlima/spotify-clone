@@ -20,6 +20,10 @@ public class ArtistService {
     private final ArtistRepository artistRepository;
     //private MusicRepository musicRepository;
 
+    public List<Artist> getAllArtists() {
+        return artistRepository.findAll();
+    }
+
     public List<Music> getPopularMusicsByArtistId(UUID artistId) {
         var artist = artistRepository.findById(artistId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

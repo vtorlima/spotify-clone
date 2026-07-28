@@ -22,6 +22,15 @@ public class ArtistController {
 
     private final ArtistService artistService;
 
+    @GetMapping
+    public ResponseEntity<List<GetArtistDTO>> getAllArtists() {
+        var artists = artistService.getAllArtists();
+
+        List<GetArtistDTO> responseDTO = artists.stream().map(GetArtistDTO::new).toList();
+
+        return ResponseEntity.ok(responseDTO);
+    }
+
     @GetMapping("/{artistId}")
     public ResponseEntity<GetArtistDTO> getArtistById(@PathVariable String artistId) {
         var artist = artistService.findById(UUID.fromString(artistId));
