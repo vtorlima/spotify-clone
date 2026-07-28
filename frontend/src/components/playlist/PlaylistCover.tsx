@@ -1,9 +1,20 @@
+import { LikedPlaylistCover } from "./LikedPlaylistCover";
+
 interface PlaylistCoverProps {
   coverImageUrls: string[];
   className?: string;
+  variant?: "default" | "liked";
 }
 
-export function PlaylistCover({ coverImageUrls, className = "" }: PlaylistCoverProps) {
+export function PlaylistCover({
+  coverImageUrls,
+  className = "",
+  variant = "default",
+}: PlaylistCoverProps) {
+  if (variant === "liked") {
+    return <LikedPlaylistCover className={className} />;
+  }
+
   if (coverImageUrls.length === 0) {
     return (
       <div
