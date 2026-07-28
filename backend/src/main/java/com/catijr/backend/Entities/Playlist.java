@@ -51,5 +51,6 @@ public class Playlist {
 
     @ManyToMany
     @JoinTable(name = "tb_playlist_music", joinColumns = @JoinColumn(name = "playlist"), inverseJoinColumns = @JoinColumn(name = "songs"))
+    @OrderColumn(name = "position")
     private List<Music> songs;
 }

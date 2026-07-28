@@ -6,7 +6,6 @@ import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Entities.Playlist;
-import com.catijr.backend.Mappers.PlaylistMapper;
 import com.catijr.backend.Repositories.MusicRepository;
 import com.catijr.backend.Repositories.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,6 @@ public class PlaylistService {
 
     private final PlaylistRepository playlistRepository;
     private final MusicRepository musicRepository;
-    private final PlaylistMapper playlistMapper;
 
     public Playlist getPlaylistById(UUID playlistId) {
         var playlist = playlistRepository.findById(playlistId)
@@ -74,8 +76,15 @@ public class PlaylistService {
         }
     }
   
-    public GetPlaylistNoMusicDTO createPlaylist(CreatePlaylistDTO playlist){
-        Playlist playlistEntity = playlistMapper.toEntity(playlist);
+    public GetPlaylistNoMusicDTO createPlaylist(CreatePlaylistDTO dto){
+        Playlist playlistEntity = Playlist.builder()
+                .name(dto.name())
+                .description(dto.description())
+                .songs(new ArrayList<>())
+                .musicQtd(0)
+                .duration(0)
+                .build();
+
         Playlist savedEntity = playlistRepository.save(playlistEntity);
 
         return new GetPlaylistNoMusicDTO(savedEntity);
@@ -110,5 +119,33 @@ public class PlaylistService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public Playlist reorderPlaylistMusics(UUID playlistId, List<UUID> orderedMusicIds) {
+        var playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // Defensivo: em playlists carregadas o Hibernate já devolve lista (possivelmente vazia).
+        List<Music> current = playlist.getSongs() != null
+                ? playlist.getSongs()
+                : new ArrayList<>();
+
+        // A nova ordem precisa ser exatamente o mesmo conjunto de músicas (sem somar/remover).
+        Set<UUID> currentIds = current.stream().map(Music::getId).collect(Collectors.toSet());
+        if (orderedMusicIds.size() != current.size()
+                || !currentIds.equals(new HashSet<>(orderedMusicIds))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        Map<UUID, Music> byId = current.stream()
+                .collect(Collectors.toMap(Music::getId, music -> music));
+
+        List<Music> reordered = orderedMusicIds.stream()
+                .map(byId::get)
+                .collect(Collectors.toList());
+
+        playlist.setSongs(reordered);
+
+        return playlistRepository.save(playlist);
     }
 }
