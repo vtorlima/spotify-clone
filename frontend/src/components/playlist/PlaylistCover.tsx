@@ -1,3 +1,4 @@
+import { FiMusic } from "react-icons/fi";
 import { LikedPlaylistCover } from "./LikedPlaylistCover";
 
 interface PlaylistCoverProps {
@@ -18,9 +19,11 @@ export function PlaylistCover({
   if (coverImageUrls.length === 0) {
     return (
       <div
-        className={`overflow-hidden rounded-md bg-background-elements ${className}`}
+        className={`flex items-center justify-center overflow-hidden rounded-md bg-background-elements ${className}`}
         aria-label="Playlist sem capa"
-      />
+      >
+        <FiMusic className="h-1/2 w-1/2 text-text-subdued" />
+      </div>
     );
   }
 
