@@ -15,6 +15,7 @@ export interface PlayerState {
   volume: number;
   isMuted: boolean;
   progress: number;
+  sourceId: string | null;
 }
 
 const initialState: PlayerState = {
@@ -25,10 +26,11 @@ const initialState: PlayerState = {
   volume: 0.8,
   isMuted: false,
   progress: 0,
+  sourceId: null,
 };
 
 type PlayerAction =
-  | { type: "PLAY_TRACK"; track: Music; queue: Music[] }
+  | { type: "PLAY_TRACK"; track: Music; queue: Music[]; sourceId: string | null }
   | { type: "TOGGLE_PLAY" }
   | { type: "PLAY" }
   | { type: "PAUSE" }
@@ -75,6 +77,7 @@ function playerReducer(state: PlayerState, action: PlayerAction): PlayerState {
         currentIndex,
         isPlaying: true,
         progress: 0,
+        sourceId: action.sourceId,
       };
     }
 
@@ -164,7 +167,7 @@ function playerReducer(state: PlayerState, action: PlayerAction): PlayerState {
 }
 
 export interface PlayerActions {
-  playTrack: (track: Music, queue?: Music[]) => void;
+  playTrack: (track: Music, queue?: Music[], sourceId?: string) => void;
   togglePlay: () => void;
   play: () => void;
   pause: () => void;
@@ -195,8 +198,13 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const actions = useMemo<PlayerActions>(
     () => ({
-      playTrack: (track, queue) =>
-        dispatch({ type: "PLAY_TRACK", track, queue: queue ?? [track] }),
+      playTrack: (track, queue, sourceId) =>
+        dispatch({
+          type: "PLAY_TRACK",
+          track,
+          queue: queue ?? [track],
+          sourceId: sourceId ?? null,
+        }),
       togglePlay: () => dispatch({ type: "TOGGLE_PLAY" }),
       play: () => dispatch({ type: "PLAY" }),
       pause: () => dispatch({ type: "PAUSE" }),
