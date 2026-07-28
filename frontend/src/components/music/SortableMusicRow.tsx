@@ -1,6 +1,7 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { FiMenu } from "react-icons/fi";
 import type { Music } from "../../types/music";
+import type { TrackPlaylistContext } from "../../hooks/useTrackMenuItems";
 import { MusicRow } from "./MusicRow";
 
 interface SortableMusicRowProps {
@@ -8,9 +9,16 @@ interface SortableMusicRowProps {
   position: number;
   queue: Music[];
   disabled?: boolean;
+  playlistContext?: TrackPlaylistContext;
 }
 
-export function SortableMusicRow({ music, position, queue, disabled }: SortableMusicRowProps) {
+export function SortableMusicRow({
+  music,
+  position,
+  queue,
+  disabled,
+  playlistContext,
+}: SortableMusicRowProps) {
   const {
     attributes,
     listeners,
@@ -51,7 +59,13 @@ export function SortableMusicRow({ music, position, queue, disabled }: SortableM
         isDragging ? "relative z-10 opacity-80" : ""
       }`}
     >
-      <MusicRow music={music} position={position} queue={queue} dragHandle={dragHandle} />
+      <MusicRow
+        music={music}
+        position={position}
+        queue={queue}
+        dragHandle={dragHandle}
+        playlistContext={playlistContext}
+      />
     </div>
   );
 }

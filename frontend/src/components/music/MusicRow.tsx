@@ -4,7 +4,10 @@ import { FiPause, FiPlay } from "react-icons/fi";
 import type { Music } from "../../types/music";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTrackDuration } from "../../utils/formatDuration";
-import { useTrackMenuItems } from "../../hooks/useTrackMenuItems";
+import {
+  useTrackMenuItems,
+  type TrackPlaylistContext,
+} from "../../hooks/useTrackMenuItems";
 import { TrackActionMenu } from "./TrackActionMenu";
 import { LikedSongButton } from "./LikedSongButton";
 import { ContextMenu } from "../ui/ContextMenu";
@@ -14,12 +17,21 @@ interface MusicRowProps {
   position: number;
   queue?: Music[];
   dragHandle?: ReactNode;
+  playlistContext?: TrackPlaylistContext;
 }
 
-export function MusicRow({ music, position, queue, dragHandle }: MusicRowProps) {
+export function MusicRow({
+  music,
+  position,
+  queue,
+  dragHandle,
+  playlistContext,
+}: MusicRowProps) {
   const { currentTrack, isPlaying } = usePlayerState();
   const { playTrack, togglePlay } = usePlayerActions();
-  const { items: menuItems, loadPlaylists } = useTrackMenuItems(music);
+  const { items: menuItems, loadPlaylists } = useTrackMenuItems(music, {
+    playlistContext,
+  });
   const [menu, setMenu] = useState({ isOpen: false, x: 0, y: 0 });
 
   const isCurrentTrack = currentTrack?.id === music.id;
