@@ -1,6 +1,6 @@
 import { useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { FiPause, FiPlay } from "react-icons/fi";
+import { FiMoreHorizontal, FiPause, FiPlay } from "react-icons/fi";
 import type { Music } from "../../types/music";
 import { usePlayerActions, usePlayerState } from "../../hooks/usePlayer";
 import { formatTrackDuration } from "../../utils/formatDuration";
@@ -8,7 +8,6 @@ import {
   useTrackMenuItems,
   type TrackPlaylistContext,
 } from "../../hooks/useTrackMenuItems";
-import { TrackActionMenu } from "./TrackActionMenu";
 import { LikedSongButton } from "./LikedSongButton";
 import { ContextMenu } from "../ui/ContextMenu";
 
@@ -49,6 +48,13 @@ export function MusicRow({
     event.preventDefault();
     loadPlaylists();
     setMenu({ isOpen: true, x: event.clientX, y: event.clientY });
+  }
+
+  function openButtonMenu(event: MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    loadPlaylists();
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMenu({ isOpen: true, x: rect.left, y: rect.bottom });
   }
 
   function closeRowMenu() {
@@ -129,7 +135,15 @@ export function MusicRow({
       </span>
 
       <div className="shrink-0 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
-        <TrackActionMenu items={menuItems} onOpen={loadPlaylists} />
+        <button
+          type="button"
+          aria-label="Mais opções da faixa"
+          aria-haspopup="menu"
+          onClick={openButtonMenu}
+          className="flex h-10 w-10 items-center justify-center rounded-full text-text-subdued transition hover:bg-background-highlight hover:text-text-base"
+        >
+          <FiMoreHorizontal className="text-[20px]" />
+        </button>
       </div>
 
       <ContextMenu
