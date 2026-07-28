@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiChevronLeft, FiChevronRight, FiHome } from "react-icons/fi";
 import { usePlayerActions } from "../../hooks/usePlayer";
 import { useSearchIndex } from "../../hooks/useSearchIndex";
 import type { SearchItem } from "../../types/search";
@@ -65,6 +66,35 @@ export default function Topbar() {
 
   return (
     <header className="flex h-[60px] shrink-0 items-center px-4">
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          aria-label="Voltar"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-text-subdued transition hover:text-text-base"
+        >
+          <FiChevronLeft className="text-[20px]" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => navigate(1)}
+          aria-label="Avançar"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-text-subdued transition hover:text-text-base"
+        >
+          <FiChevronRight className="text-[20px]" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          aria-label="Início"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-text-subdued transition hover:text-text-base"
+        >
+          <FiHome className="text-[18px]" />
+        </button>
+      </div>
+
       <div ref={containerRef} className="relative mx-auto w-96">
         <input
           type="text"
@@ -74,7 +104,7 @@ export default function Topbar() {
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          placeholder="O que voce quer ouvir?"
+          placeholder="O que você quer ouvir?"
           className="h-10 w-full rounded-full bg-searchbox-bg px-4 text-12px text-text-base placeholder:text-text-subdued"
         />
 
