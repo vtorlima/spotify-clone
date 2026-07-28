@@ -4,6 +4,7 @@ import com.catijr.backend.DTOs.Playlist.CreatePlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
+import com.catijr.backend.DTOs.Playlist.ReorderPlaylistDTO;
 import com.catijr.backend.Services.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/playlist")
@@ -68,5 +70,19 @@ public class PlaylistController {
         playlistService.deleteMusicById(UUID.fromString(playlistId), UUID.fromString(musicId));
 
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{playlistId}/order")
+    public ResponseEntity<GetPlaylistDTO> reorderPlaylistMusics(
+            @PathVariable String playlistId,
+            @RequestBody ReorderPlaylistDTO body) {
+
+        var orderedIds = body.musicIds().stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList());
+
+        var playlist = playlistService.reorderPlaylistMusics(UUID.fromString(playlistId), orderedIds);
+
+        return ResponseEntity.ok(new GetPlaylistDTO(playlist));
     }
 }
