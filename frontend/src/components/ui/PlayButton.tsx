@@ -1,4 +1,4 @@
-type PlayButtonSize = "sm" | "lg";
+type PlayButtonSize = "xs" | "sm" | "lg";
 
 interface PlayButtonProps {
   as?: "button" | "span";
@@ -11,11 +11,13 @@ interface PlayButtonProps {
 }
 
 const sizeClass: Record<PlayButtonSize, string> = {
+  xs: "h-8 w-8",
   sm: "h-13 w-13",
   lg: "h-14 w-14",
 };
 
 const iconSize: Record<PlayButtonSize, number> = {
+  xs: 16,
   sm: 30,
   lg: 28,
 };
