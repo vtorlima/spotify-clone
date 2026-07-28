@@ -1,8 +1,9 @@
+import { HomePlaylistsShelf } from "../components/home/HomePlaylistsShelf";
+
 export default function HomePage() {
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold">Início</h2>
-      <p className="text-gray-400">Dashboard.</p>
-    </div>
-  )
+    <section className="flex flex-col gap-8 p-6">
+      <HomePlaylistsShelf />
+    </section>
+  );
 }
