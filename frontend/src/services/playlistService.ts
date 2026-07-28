@@ -50,3 +50,10 @@ export function removeMusicFromPlaylist(
 ): Promise<void> {
   return apiDelete<void>(`/playlist/${playlistId}/${musicId}`);
 }
+
+export function reorderPlaylistMusics(
+  playlistId: string,
+  musicIds: string[]
+): Promise<Playlist> {
+  return apiPut<Playlist>(`/playlist/${playlistId}/order`, { musicIds });
+}

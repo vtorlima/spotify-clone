@@ -1,9 +1,18 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  DndContext,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
 import { ApiError } from "../services/api";
 import {
   deletePlaylist,
   getPlaylistById,
+  reorderPlaylistMusics,
   updatePlaylistAttributes,
 } from "../services/playlistService";
 import { useAsyncData } from "../hooks/useAsyncData";
@@ -16,10 +25,11 @@ import {
   type PlaylistFormValues,
 } from "../components/playlist/PlaylistFormModal";
 import { ConfirmDialog } from "../components/ui/ConfirmDialog";
-import { MusicRow } from "../components/music/MusicRow";
+import { SortableMusicRow } from "../components/music/SortableMusicRow";
 import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
 import { EmptyState } from "../components/ui/EmptyState";
+import type { Music } from "../types/music";
 
 export default function PlaylistDetailsPage() {
   const { playlistId } = useParams<{ playlistId: string }>();
@@ -41,11 +51,56 @@ export default function PlaylistDetailsPage() {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
 
+  const [orderedMusics, setOrderedMusics] = useState<Music[]>([]);
+  const [isReordering, setIsReordering] = useState(false);
+
+  useEffect(() => {
+    setOrderedMusics(playlist?.musics ?? []);
+  }, [playlist]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
+  );
+
   function handlePlayPlaylist() {
-    if (!playlist || playlist.musics.length === 0) {
+    if (orderedMusics.length === 0) {
       return;
     }
-    playTrack(playlist.musics[0], playlist.musics);
+    playTrack(orderedMusics[0], orderedMusics);
+  }
+
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id || !playlist || isReordering) {
+      return;
+    }
+
+    const oldIndex = orderedMusics.findIndex((m) => m.id === active.id);
+    const newIndex = orderedMusics.findIndex((m) => m.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) {
+      return;
+    }
+
+    const previous = orderedMusics;
+    const next = [...orderedMusics];
+    const [moved] = next.splice(oldIndex, 1);
+    next.splice(newIndex, 0, moved);
+
+    setOrderedMusics(next);
+    setIsReordering(true);
+
+    try {
+      await reorderPlaylistMusics(playlist.id, next.map((m) => m.id));
+    } catch (caught) {
+      setOrderedMusics(previous);
+      const message =
+        caught instanceof ApiError
+          ? caught.message
+          : "Não foi possível salvar a nova ordem.";
+      showToast(message, "error");
+    } finally {
+      setIsReordering(false);
+    }
   }
 
   async function handleEditSubmit(values: PlaylistFormValues) {
@@ -132,13 +187,13 @@ export default function PlaylistDetailsPage() {
       <PlaylistDetailsHeader playlist={playlist} />
 
       <PlaylistActionsBar
-        canPlay={playlist.musics.length > 0}
+        canPlay={orderedMusics.length > 0}
         onPlay={handlePlayPlaylist}
         onEdit={() => setEditOpen(true)}
         onDelete={() => setDeleteOpen(true)}
       />
 
-      {playlist.musics.length === 0 ? (
+      {orderedMusics.length === 0 ? (
         <EmptyState
           title="Essa playlist ainda não tem músicas"
           description="Adicione faixas para começar a ouvir."
@@ -146,6 +201,7 @@ export default function PlaylistDetailsPage() {
       ) : (
         <div className="flex flex-col">
           <div className="flex items-center gap-4 border-b border-divider px-4 pb-2 text-12px uppercase text-text-subdued">
+            <span className="w-5 shrink-0" />
             <span className="w-6 shrink-0 text-right">#</span>
             <span className="w-10 shrink-0" />
             <span className="min-w-0 flex-1">Título</span>
@@ -155,16 +211,23 @@ export default function PlaylistDetailsPage() {
             <span className="w-10 shrink-0" />
           </div>
 
-          <div className="flex flex-col pt-2">
-            {playlist.musics.map((music, index) => (
-              <MusicRow
-                key={music.id}
-                music={music}
-                position={index + 1}
-                queue={playlist.musics}
-              />
-            ))}
-          </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <div className="flex flex-col pt-2">
+              {orderedMusics.map((music, index) => (
+                <SortableMusicRow
+                  key={music.id}
+                  music={music}
+                  position={index + 1}
+                  queue={orderedMusics}
+                  disabled={isReordering}
+                />
+              ))}
+            </div>
+          </DndContext>
         </div>
       )}
 
