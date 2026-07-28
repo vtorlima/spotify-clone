@@ -1,14 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
+import type { MenuItem } from "../../types/menu";
 
-export interface ActionMenuItem {
-  id: string;
-  label: string;
-  icon?: ReactNode;
-  disabled?: boolean;
-  variant?: "default" | "danger";
-  onSelect?: () => void;
-}
+export type ActionMenuItem = MenuItem;
 
 interface ActionMenuProps {
   ariaLabel: string;

@@ -1,13 +1,7 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
+import type { MenuItem } from "../../types/menu";
 
-export interface ContextMenuItem {
-  id: string;
-  label: string;
-  icon?: ReactNode;
-  disabled?: boolean;
-  variant?: "default" | "danger";
-  onSelect?: () => void;
-}
+export type ContextMenuItem = MenuItem;
 
 interface ContextMenuProps {
   isOpen: boolean;
