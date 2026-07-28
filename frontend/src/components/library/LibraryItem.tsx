@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { FiHeart } from "react-icons/fi";
 import { PlaylistCover } from "../playlist/PlaylistCover";
 
 export type LibraryItemData =
@@ -33,9 +32,6 @@ interface LibraryItemProps {
   item: LibraryItemData;
 }
 
-const LIKED_GRADIENT =
-  "linear-gradient(135deg, #4300b0 0%, #8ba5d8 100%)";
-
 export function LibraryItem({ item }: LibraryItemProps) {
   return (
     <Link
@@ -57,12 +53,11 @@ export function LibraryItem({ item }: LibraryItemProps) {
 function LibraryItemThumb({ item }: LibraryItemProps) {
   if (item.type === "liked") {
     return (
-      <div
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md"
-        style={{ backgroundImage: LIKED_GRADIENT }}
-      >
-        <FiHeart className="text-[20px] text-text-base" fill="currentColor" />
-      </div>
+      <PlaylistCover
+        variant="liked"
+        coverImageUrls={[]}
+        className="h-12 w-12 shrink-0"
+      />
     );
   }
 
