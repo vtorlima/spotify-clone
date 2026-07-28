@@ -16,12 +16,6 @@ interface LibraryData {
   reload: () => void;
 }
 
-/**
- * Busca em paralelo os dados da biblioteca lateral (playlists, artistas
- * recentes e álbuns recentes). Segue o mesmo padrão de `useAsyncData`, mas
- * combina os três fetchers e expõe `reload` para atualizar a lista depois de
- * criar uma playlist.
- */
 export function useLibraryData(): LibraryData {
   const [playlists, setPlaylists] = useState<PlaylistSummary[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -68,6 +62,18 @@ export function useLibraryData(): LibraryData {
       ignore = true;
     };
   }, [reloadIndex]);
+
+  useEffect(() => {
+    function handleLibraryRefresh() {
+      setReloadIndex((current) => current + 1);
+    }
+
+    window.addEventListener("library:refresh", handleLibraryRefresh);
+
+    return () => {
+      window.removeEventListener("library:refresh", handleLibraryRefresh);
+    };
+  }, []);
 
   const reload = useCallback(() => {
     setReloadIndex((current) => current + 1);

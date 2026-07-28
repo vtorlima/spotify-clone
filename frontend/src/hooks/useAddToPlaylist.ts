@@ -29,6 +29,8 @@ export function useAddToPlaylist() {
     try {
       await addMusicToPlaylist(playlistId, musicId);
 
+      window.dispatchEvent(new Event("library:refresh"));
+
       const likedPlaylistId = await ensureLikedPlaylistId().catch(() => null);
       if (playlistId === likedPlaylistId) {
         markLiked(musicId);
