@@ -7,12 +7,24 @@ import {
   saveLikedPlaylistId,
 } from "../utils/likedPlaylist";
 
-export async function resolveLikedPlaylistId(): Promise<string> {
+let inFlight: Promise<string> | null = null;
+
+export function resolveLikedPlaylistId(): Promise<string> {
   const cached = getCachedLikedPlaylistId();
+
   if (cached) {
-    return cached;
+    return Promise.resolve(cached);
   }
-  return discoverLikedPlaylistId();
+
+  if (inFlight) {
+    return inFlight;
+  }
+
+  inFlight = discoverLikedPlaylistId().finally(() => {
+    inFlight = null;
+  });
+
+  return inFlight;
 }
 
 async function discoverLikedPlaylistId(): Promise<string> {
@@ -27,6 +39,11 @@ async function discoverLikedPlaylistId(): Promise<string> {
   return liked.id;
 }
 
+export function clearLikedPlaylistResolution(): void {
+  forgetLikedPlaylistId();
+  inFlight = null;
+}
+
 export async function withLikedPlaylistId<T>(
   action: (likedPlaylistId: string) => Promise<T>
 ): Promise<T> {
@@ -36,7 +53,7 @@ export async function withLikedPlaylistId<T>(
     return await action(id);
   } catch (caught) {
     if (caught instanceof ApiError && caught.status === 404) {
-      forgetLikedPlaylistId();
+      clearLikedPlaylistResolution();
       const freshId = await discoverLikedPlaylistId();
 
       if (freshId !== id) {

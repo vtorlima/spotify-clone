@@ -6,9 +6,15 @@ import { useToast } from "../../hooks/useToast";
 
 interface LikedSongButtonProps {
   music: Music;
+  variant?: "player" | "row";
+  className?: string;
 }
 
-export function LikedSongButton({ music }: LikedSongButtonProps) {
+export function LikedSongButton({
+  music,
+  variant = "player",
+  className = "",
+}: LikedSongButtonProps) {
   const { ensureLikedPlaylistId, likeSong, unlikeSong } = useLikedSongActions();
   const { showToast } = useToast();
 
@@ -53,6 +59,13 @@ export function LikedSongButton({ music }: LikedSongButtonProps) {
     }
   }
 
+  const visibilityClass =
+    variant === "row" && !isLiked
+      ? "opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+      : "";
+
+  const spacingClass = variant === "player" ? "ml-2" : "";
+
   return (
     <button
       type="button"
@@ -60,9 +73,9 @@ export function LikedSongButton({ music }: LikedSongButtonProps) {
       disabled={isProcessing}
       aria-pressed={isLiked}
       aria-label={isLiked ? "Remover de Músicas Curtidas" : "Adicionar a Músicas Curtidas"}
-      className={`ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition disabled:opacity-50 ${
+      className={`${spacingClass} flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition disabled:opacity-50 ${
         isLiked ? "bg-accent text-black" : "text-text-subdued hover:text-text-base"
-      }`}
+      } ${visibilityClass} ${className}`}
     >
       {isLiked ? (
         <FiCheck className="text-[14px]" />
