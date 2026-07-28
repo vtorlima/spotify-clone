@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { PlaylistSummary } from "../../types/playlist";
 import { formatPlaylistDuration } from "../../utils/formatDuration";
+import { isLikedPlaylistName } from "../../utils/likedPlaylist";
 import { PlayButton } from "../ui/PlayButton";
 import { PlaylistCover } from "./PlaylistCover";
 
@@ -17,7 +18,11 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
       className="group flex flex-col gap-3 rounded-lg bg-background-base p-4 transition-colors hover:bg-background-highlight"
     >
       <div className="relative aspect-square w-full">
-        <PlaylistCover coverImageUrls={playlist.coverImageUrls} className="h-full w-full" />
+        <PlaylistCover
+          coverImageUrls={playlist.coverImageUrls}
+          variant={isLikedPlaylistName(playlist.name) ? "liked" : "default"}
+          className="h-full w-full"
+        />
 
         <PlayButton
           as="span"
